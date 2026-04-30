@@ -1287,6 +1287,14 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
       <span class="country-tag">🏠 Lucknow</span>
       <span class="country-tag">🌆 Kanpur</span>
     </div>
+    <div class="world-label" style="margin-top:1rem;">USA</div>
+    <div class="country-grid">
+      <span class="country-tag">🤠 Austin, Texas</span>
+    </div>
+    <div class="world-label" style="margin-top:1rem;">Japan</div>
+    <div class="country-grid">
+      <span class="country-tag">🌸 Oita</span>
+    </div>
     </div>
   </div>
 
@@ -1614,11 +1622,11 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.4 });
 document.querySelectorAll('[id]').forEach(s => observer.observe(s));
 window.addEventListener('load', () => {
-  const map = L.map('map', { scrollWheelZoom: false }).setView([20, 78], 4);
+  const map = L.map('map', { scrollWheelZoom: false }).setView([25, 40], 2);
   window._leafletMap = map;
   L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '© OpenStreetMap © CARTO' }).addTo(map);
   const icon = L.divIcon({ className: '', html: `<div style="width:12px;height:12px;border-radius:50%;background:#2a7d6f;border:2px solid white;box-shadow:0 0 0 2px rgba(42,125,111,0.4);"></div>`, iconSize:[12,12], iconAnchor:[6,6] });
-  [[12.9716,77.5946,'Bangalore','RVCE · Tektronix · Stealth Startup'],[18.5204,73.8567,'Pune','AI Platform'],[26.8467,80.9462,'Lucknow','Hometown'],[26.4499,80.3319,'Kanpur','Uttar Pradesh']].forEach(([lat,lng,n,d]) => {
+  [[12.9716,77.5946,'Bangalore','RVCE · Tektronix · Stealth Startup'],[18.5204,73.8567,'Pune','AI Platform'],[26.8467,80.9462,'Lucknow','Hometown'],[26.4499,80.3319,'Kanpur','Uttar Pradesh'],[30.2672,-97.7431,'Austin, Texas','USA'],[33.2396,131.6100,'Oita','Japan']].forEach(([lat,lng,n,d]) => {
     L.marker([lat,lng],{icon}).addTo(map).bindPopup(`<strong style="font-size:0.8rem">${n}</strong><br/><span style="font-size:0.72rem;color:#6b6560">${d}</span>`);
   });
 });
