@@ -118,6 +118,198 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
 .hero-social-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--tag-bg); }
 .hero-social-btn svg { width: 15px; height: 15px; fill: currentColor; flex-shrink: 0; }
 
+/* ABOUT - Gen Z Style */
+.about-vibe-row {
+  display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.6rem;
+}
+.about-tag {
+  background: var(--tag-bg); color: var(--tag-text);
+  border: 1px solid var(--border); border-radius: 999px;
+  padding: 0.3rem 0.85rem; font-size: 0.78rem; font-weight: 600;
+  letter-spacing: 0.01em; transition: all 0.15s; cursor: default;
+}
+.about-tag:hover { background: var(--accent); color: white; }
+
+/* summary card shown by default */
+.about-summary {
+  display: flex; gap: 1.1rem; align-items: center;
+  padding: 1rem 1.2rem; border-radius: 14px;
+  border: 1px solid var(--border); background: var(--tag-bg);
+  margin-bottom: 1.4rem; cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s;
+  user-select: none;
+}
+.about-summary:hover { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 12%, transparent); }
+.about-summary-avatar {
+  font-size: 2.4rem; flex-shrink: 0; line-height: 1;
+}
+.about-summary-text { flex: 1; }
+.about-summary-name {
+  font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.2rem;
+}
+.about-summary-line {
+  font-size: 0.8rem; color: var(--muted); line-height: 1.6;
+}
+.about-summary-cta {
+  display: flex; flex-direction: column; align-items: center; gap: 0.2rem;
+  font-size: 0.68rem; color: var(--accent); font-weight: 600;
+  letter-spacing: 0.04em; text-transform: uppercase; flex-shrink: 0;
+}
+.about-summary-cta svg { transition: transform 0.3s; }
+.about-summary.open .about-summary-cta svg { transform: rotate(180deg); }
+
+/* expanded detail area */
+.about-detail {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease;
+}
+.about-detail.open {
+  max-height: 2000px;
+  opacity: 1;
+}
+
+.about-block {
+  display: flex; gap: 1rem; margin-bottom: 1.4rem;
+  align-items: flex-start;
+}
+.about-block-icon {
+  font-size: 1.5rem; flex-shrink: 0; width: 40px; text-align: center;
+  margin-top: 0.15rem;
+}
+.about-block-content { flex: 1; }
+.about-block-label {
+  font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--accent); font-weight: 700; margin-bottom: 0.35rem;
+}
+.about-block-content p {
+  font-size: 0.88rem; color: var(--muted); line-height: 1.8; margin: 0;
+}
+.about-block-content p strong { color: var(--text); font-weight: 600; }
+.about-block-content p em { color: var(--accent); font-style: normal; font-weight: 500; }
+.about-currently-row {
+  display: flex; flex-wrap: wrap; gap: 1rem;
+  margin-top: 1.4rem; padding-top: 1.2rem;
+  border-top: 1px solid var(--border);
+}
+.about-currently-item {
+  display: flex; align-items: center; gap: 0.45rem;
+  font-size: 0.78rem; color: var(--muted);
+}
+.about-currently-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.25); }
+}
+.about-collapse-btn {
+  display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+  margin-top: 1.2rem; padding: 0.5rem 1.2rem;
+  font-size: 0.75rem; font-weight: 600; color: var(--muted);
+  border: 1px solid var(--border); border-radius: 999px;
+  background: transparent; cursor: pointer; font-family: var(--font);
+  transition: all 0.15s; letter-spacing: 0.04em; text-transform: uppercase;
+}
+.about-collapse-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+/* RESPONSIVE */
+/* ── RESPONSIVE ── */
+
+/* Tablet */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .page { max-width: 700px; padding: 2.5rem 2rem 8rem; }
+  .projects-grid { grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+  .books-grid { grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+}
+
+/* Mobile ≤ 768px */
+@media (max-width: 768px) {
+  html, body { overflow-x: hidden; }
+  .page { padding: 1.5rem 1rem 7rem; max-width: 100%; }
+  .card { padding: 1.6rem 1.2rem; border-radius: 16px; }
+  .hero-card { padding: 2.5rem 1.2rem 2rem; border-radius: 20px; }
+  .hero-name { font-size: 2.4rem; }
+  .hero-avatar { width: 110px; height: 110px; font-size: 1.5rem; margin-bottom: 1.3rem; }
+  .hero-desc { font-size: 0.88rem; max-width: 100%; }
+  .card-title { font-size: 1.5rem; }
+
+  /* projects & books: single column */
+  .projects-grid { grid-template-columns: 1fr; }
+  .books-grid { grid-template-columns: 1fr 1fr; }
+
+  /* about */
+  .about-block { flex-direction: column; gap: 0.5rem; }
+  .about-block-icon { width: auto; font-size: 1.2rem; }
+  .about-currently-row { gap: 0.7rem; }
+  .about-summary { gap: 0.8rem; padding: 0.9rem 1rem; }
+  .about-summary-avatar { font-size: 2rem; }
+  .about-summary-name { font-size: 0.95rem; }
+  .about-summary-line { font-size: 0.75rem; }
+
+  /* work */
+  .work-item { padding: 0.8rem; gap: 0.6rem; }
+  .work-logo { width: 38px; height: 38px; border-radius: 8px; font-size: 0.62rem; }
+  .work-info h3 { font-size: 0.88rem; }
+  .work-period { font-size: 0.68rem; }
+  .work-right { flex-wrap: wrap; }
+
+  /* contact */
+  .contact-grid { grid-template-columns: 1fr; }
+  .contact-card { padding: 1.2rem 0.8rem; }
+  #map { height: 220px; }
+
+  /* books filter */
+  .books-filter { gap: 0.35rem; flex-wrap: wrap; }
+  .book-filter-btn { font-size: 0.72rem; padding: 0.28rem 0.7rem; }
+
+  /* certs & achievements */
+  .ach-item { padding: 0.7rem 0.8rem; gap: 0.7rem; }
+  .ach-title { font-size: 0.82rem; }
+  .ach-desc { font-size: 0.74rem; }
+  .cert-item { gap: 0.6rem; padding: 0.7rem 0; }
+  .cert-name { font-size: 0.78rem; }
+
+  /* tech icons */
+  .tech-icon { width: 52px; }
+  .tech-icon img { width: 32px; height: 32px; }
+
+  /* nav */
+  .bottom-nav { padding: 0.4rem 0.6rem; gap: 0.05rem; }
+  .nav-icon { width: 32px; height: 32px; }
+  .nav-icon svg { width: 16px; height: 16px; }
+
+  .hero-socials { gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
+  .hero-social-btn { padding: 0.45rem 0.85rem; font-size: 0.75rem; }
+  .section-toggle { font-size: 0.73rem; padding: 0.25rem 0.75rem; }
+  .project-thumb { height: 110px; font-size: 2.2rem; }
+  .project-body { padding: 0.85rem 0.9rem; }
+}
+
+/* Small mobile ≤ 480px */
+@media (max-width: 480px) {
+  .page { padding: 1.2rem 0.85rem 7rem; }
+  .hero-name { font-size: 2rem; }
+  .card { padding: 1.3rem 1rem; }
+  .hero-card { padding: 2rem 1rem 1.5rem; }
+  .hero-social-btn span { display: none; }
+  .books-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .work-right { flex-direction: column; align-items: flex-end; gap: 0.2rem; }
+  .work-period { white-space: normal; text-align: right; }
+  .about-summary { flex-direction: column; text-align: center; }
+  .about-summary-cta { flex-direction: row; justify-content: center; }
+  .bottom-nav { padding: 0.35rem 0.4rem; }
+}
+
+/* Very small ≤ 360px */
+@media (max-width: 360px) {
+  .hero-name { font-size: 1.75rem; }
+  .card { padding: 1rem 0.85rem; }
+  .books-grid { grid-template-columns: 1fr; }
+  .book-item { flex-direction: row; align-items: center; gap: 0.8rem; }
+}
+
 /* ABOUT */
 .about-body { font-size: 0.9rem; color: var(--muted); line-height: 1.85; overflow: hidden; max-height: 2000px; opacity: 1; transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease; }
 .about-body.collapsed { max-height: 0; opacity: 0; }
@@ -239,6 +431,8 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
 .project-body h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.15rem; }
 .proj-year { font-size: 0.72rem; color: var(--muted); margin-bottom: 0.45rem; }
 .project-body p { font-size: 0.78rem; color: var(--muted); line-height: 1.55; margin-bottom: 0.65rem; }
+.proj-github-link { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.55rem; font-size: 0.74rem; font-weight: 600; color: var(--accent); text-decoration: none; opacity: 0.85; transition: opacity 0.15s; }
+.proj-github-link:hover { opacity: 1; text-decoration: underline; }
 .proj-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
 .proj-tag { font-size: 0.62rem; padding: 0.18rem 0.5rem; background: var(--tag-bg); color: var(--tag-text); border-radius: 999px; font-weight: 500; }
 
@@ -249,7 +443,8 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
   border: 1.5px solid var(--border); background: white; color: var(--muted);
   cursor: pointer; font-family: var(--font); transition: all 0.15s;
 }
-.book-filter-btn.active, .book-filter-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--tag-bg); }
+.book-filter-btn.active { border-color: var(--accent); color: white; background: var(--accent); }
+.book-filter-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--tag-bg); }
 .books-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
 .book-item { display: flex; align-items: flex-start; gap: 0.8rem; padding: 0.65rem 0.85rem; border: 1px solid var(--border); border-radius: 10px; background: var(--card); transition: background 0.3s; }
 .book-num { font-size: 0.7rem; color: var(--muted); font-weight: 600; min-width: 18px; padding-top: 0.1rem; }
@@ -427,6 +622,28 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
   border-radius: 999px; border: 1.5px solid var(--border); color: var(--muted);
 }
 [data-theme="dark"] .lang-card-bottom { background: var(--card2); }
+
+/* CERT LOGO */
+.cert-logo {
+  width: 44px; height: 44px; border-radius: 8px; object-fit: contain;
+  background: white; border: 1px solid var(--border); padding: 3px;
+  flex-shrink: 0;
+}
+.cert-item {
+  display: flex; align-items: center; gap: 0.85rem;
+}
+
+
+/* BOOK COVERS */
+.book-cover {
+  width: 42px; height: 58px; border-radius: 4px; object-fit: cover;
+  flex-shrink: 0; border: 1px solid var(--border);
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.13);
+  background: var(--tag-bg);
+}
+.book-item { display: flex; align-items: flex-start; gap: 0.8rem; padding: 0.65rem 0.85rem; border: 1px solid var(--border); border-radius: 10px; background: var(--card); transition: background 0.3s; }
+.book-info { display: flex; flex-direction: column; justify-content: center; }
+
 </style>
 </head>
 <body>
@@ -440,31 +657,105 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
     <div class="hero-phonetic">Abhinav Verma &nbsp;·&nbsp; Software Engineer &nbsp;·&nbsp; AI / Full-Stack</div>
     <p class="hero-desc">Building AI-powered systems, LLM pipelines, and scalable APIs. Passionate about making complex systems reliable, observable, and elegant.</p>
     <p class="hero-building">Currently building at <a href="https://www.astilbepage.com">Astilbe Page</a>.</p>
-    <div class="hero-socials">
-      <a class="hero-social-btn" href="http://www.github.com/abhinav09072002" target="_blank">
-        <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-        GitHub
-      </a>
-      <a class="hero-social-btn" href="http://www.linkedin.com/in/abhinavverma09" target="_blank">
-        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-        LinkedIn
-      </a>
-      <a class="hero-social-btn" href="mailto:akv09072002@gmail.com">
-        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
-        Email
-      </a>
-    </div>
+    
   </div>
 
   <!-- ABOUT -->
   <div class="card" id="about">
-    <div class="card-title">About.</div>
-    <button class="section-toggle" onclick="toggleSection(this,'about-body')">Hide ↑</button>
-    <div class="section-body" id="about-body">
-      <p>I'm a software engineer who thrives at the intersection of AI research and production engineering. I've architected compliance-focused agentic AI platforms, automated hardware testing pipelines at Tektronix, and engineered full-stack newsletter products powered by LLMs.</p>
-      <p>I care about systems that are not just clever but reliable, observable, and easy to maintain. Whether it's a RAG pipeline hitting 30% lower latency or a clean React UI with proper RBAC — the details matter.</p>
-      <p>Outside of code, I enjoy theatre. I've written and performed in multiple productions across Bangalore and at national-level events with CARV Hindi Theatre. I also mentor underprivileged students in mathematics and believe strongly in accessible education.</p>
-      <p>When I'm not coding, you'll find me grinding DSA problems (400+ solved), exploring Bangalore's food scene, or rehearsing for the next street play.</p>
+    <div class="card-title">About Me.</div>
+
+    <!-- SUMMARY — always visible, click to expand -->
+    <div class="about-summary" id="about-summary" onclick="toggleAbout()">
+      <div class="about-summary-avatar">👨‍💻</div>
+      <div class="about-summary-text">
+        <div class="about-summary-name">Abhinav Verma</div>
+        <div class="about-summary-line">AI Engineer · Full-Stack · Theatre Kid · RVCE EEE '24<br>building LLM pipelines in Bangalore, one commit at a time.</div>
+      </div>
+      <div class="about-summary-cta">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        <span>read more</span>
+      </div>
+    </div>
+
+    <!-- DETAIL — hidden until click -->
+    <div class="about-detail" id="about-detail">
+
+      <div class="about-vibe-row">
+        <span class="about-tag">🤖 AI Engineer</span>
+        <span class="about-tag">⚡ Full-Stack</span>
+        <span class="about-tag">🎭 Theatre Kid</span>
+        <span class="about-tag">📚 DSA Grinder</span>
+        <span class="about-tag">📍 Bangalore</span>
+      </div>
+
+      <div class="about-block">
+        <div class="about-block-icon">👋</div>
+        <div class="about-block-content">
+          <div class="about-block-label">who am i</div>
+          <p>hey, i'm <strong>Abhinav Verma</strong> — a software engineer from Lucknow, now living my best life in Bangalore. i build things at the intersection of AI and production systems. not just the "look ma, i used GPT" kind — i mean actual agentic pipelines, LLM routers, RAG systems with real latency wins.</p>
+        </div>
+      </div>
+
+      <div class="about-block">
+        <div class="about-block-icon">🛠️</div>
+        <div class="about-block-content">
+          <div class="about-block-label">what i actually do</div>
+          <p>currently building an AI-powered newsletter platform at <strong>Astilbe Page</strong> — full-stack (React + Node.js + MongoDB), LLM routing with Mistral-7B, RBAC, email pipelines, the works. before that, i was at <strong>Tektronix</strong> automating hardware testing with Python and SCPI, and at <strong>Astilbe Page</strong> (Pune), building compliance-focused AI agents. graduated from <strong>RVCE Bangalore</strong> with a degree in Electrical &amp; Electronics Engineering — that's where the chaos began.</p>
+        </div>
+      </div>
+
+      <div class="about-block">
+        <div class="about-block-icon">🧠</div>
+        <div class="about-block-content">
+          <div class="about-block-label">the tech obsession</div>
+          <p>i care deeply about systems that aren't just clever — they have to be <em>reliable, observable, and maintainable</em>. a RAG pipeline that shaved 30% latency? satisfying. a clean React UI with proper RBAC? equally satisfying. i've got 400+ DSA problems solved on LeetCode, which is either impressive or a cry for help, honestly.</p>
+        </div>
+      </div>
+
+      <div class="about-block">
+        <div class="about-block-icon">🎭</div>
+        <div class="about-block-content">
+          <div class="about-block-label">the plot twist — i do theatre</div>
+          <p>yeah, the AI engineer writes and performs street plays. i've done multiple productions across Bangalore and national-level events with <strong>CARV Hindi Theatre</strong>. theatre taught me storytelling, improvisation, and how to hold a room — skills that surprisingly transfer to technical presentations and team collaboration.</p>
+        </div>
+      </div>
+
+      <div class="about-block">
+        <div class="about-block-icon">📐</div>
+        <div class="about-block-content">
+          <div class="about-block-label">giving back</div>
+          <p>i mentor underprivileged students in mathematics. accessible education is something i believe in genuinely — not just as a tagline. grew up in Lucknow, studied in Kanpur, grinded through Bangalore — i know what it means to figure things out without a playbook.</p>
+        </div>
+      </div>
+
+      <div class="about-block">
+        <div class="about-block-icon">☕</div>
+        <div class="about-block-content">
+          <div class="about-block-label">when i'm not shipping</div>
+          <p>exploring Bangalore's ever-growing food scene, rehearsing for the next play, or deep in a DSA rabbit hole at 2am. occasionally touch grass. sometimes in that order.</p>
+        </div>
+      </div>
+
+      <div class="about-currently-row">
+        <div class="about-currently-item">
+          <span class="about-currently-dot" style="background:#22c55e;"></span>
+          <span>Building @ Astilbe Page</span>
+        </div>
+        <div class="about-currently-item">
+          <span class="about-currently-dot" style="background:#3b82f6;"></span>
+          <span>Open to interesting roles</span>
+        </div>
+        <div class="about-currently-item">
+          <span class="about-currently-dot" style="background:#f59e0b;"></span>
+          <span>RVCE EEE '24</span>
+        </div>
+      </div>
+
+      <button class="about-collapse-btn" onclick="event.preventDefault();event.stopPropagation();toggleAbout()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+        collapse
+      </button>
+
     </div>
   </div>
 
@@ -678,6 +969,10 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
           <h3>Know BTC</h3><div class="proj-year">2024</div>
           <p>OHLC Bitcoin Market Analyzer using XGBoost & Random Forest. Uncovered price patterns with interactive Plotly visualisations.</p>
           <div class="proj-tags"><span class="proj-tag">Python</span><span class="proj-tag">XGBoost</span><span class="proj-tag">Plotly</span><span class="proj-tag">Pandas</span></div>
+          <a href="https://github.com/abhinav09072002/OHLCQuantify" target="_blank" class="proj-github-link">
+            <svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:currentColor;flex-shrink:0;"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            View on GitHub
+          </a>
         </div>
       </div>
       <div class="project-card">
@@ -686,14 +981,22 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
           <h3>Predict-or</h3><div class="proj-year">2023 – Present</div>
           <p>Stock price predictor using LSTM deep learning. Achieved 98.9% prediction accuracy with robust preprocessing.</p>
           <div class="proj-tags"><span class="proj-tag">TensorFlow</span><span class="proj-tag">LSTM</span><span class="proj-tag">scikit-learn</span></div>
+          <a href="https://github.com/abhinav09072002/prediction-predictor" target="_blank" class="proj-github-link">
+            <svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:currentColor;flex-shrink:0;"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            View on GitHub
+          </a>
         </div>
       </div>
       <div class="project-card">
-        <div class="project-thumb p3">📚</div>
+        <div class="project-thumb p3">🔥</div>
         <div class="project-body">
-          <h3>Book Matchmaker</h3><div class="proj-year">2023</div>
-          <p>Recommendation engine using collaborative filtering and cosine similarity for personalised book suggestions.</p>
-          <div class="proj-tags"><span class="proj-tag">Python</span><span class="proj-tag">scikit-learn</span><span class="proj-tag">JavaScript</span></div>
+          <h3>ByteForge</h3><div class="proj-year">2024</div>
+          <p>GPT built from scratch in PyTorch — byte-level tokenizer, multi-head causal self-attention, LoRA fine-tuning, SFT & RLHF reward model. Served via FastAPI with top-k sampling. No Hugging Face dependencies.</p>
+          <div class="proj-tags"><span class="proj-tag">PyTorch</span><span class="proj-tag">LoRA</span><span class="proj-tag">RLHF</span><span class="proj-tag">FastAPI</span><span class="proj-tag">Transformers</span></div>
+          <a href="https://github.com/abhinav09072002/-ByteForge" target="_blank" class="proj-github-link">
+            <svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:currentColor;flex-shrink:0;"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            View on GitHub
+          </a>
         </div>
       </div>
       <div class="project-card">
@@ -702,6 +1005,10 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
           <h3>Campus Wave</h3><div class="proj-year">2023</div>
           <p>Full-stack college management system with React, Django REST Framework, and optimised PostgreSQL backend.</p>
           <div class="proj-tags"><span class="proj-tag">React</span><span class="proj-tag">Django</span><span class="proj-tag">PostgreSQL</span></div>
+          <a href="https://github.com/abhinav09072002/Campus-Wave" target="_blank" class="proj-github-link">
+            <svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:currentColor;flex-shrink:0;"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            View on GitHub
+          </a>
         </div>
       </div>
     </div>
@@ -714,61 +1021,137 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
     <p class="card-sub" style="text-align:center;">Readings that shape my worldview</p>
     <button class="section-toggle" onclick="toggleSection(this,'books-body')">Hide ↑</button>
     <div id="books-body" class="section-body">
-    <div class="books-filter">
-      <button class="book-filter-btn active" onclick="filterBooks(this,'all')">All (17)</button>
-      <button class="book-filter-btn" onclick="filterBooks(this,'ai')">AI &amp; Engineering (4)</button>
-      <button class="book-filter-btn" onclick="filterBooks(this,'sys')">Software Systems (3)</button>
-      <button class="book-filter-btn" onclick="filterBooks(this,'phil')">Philosophy (2)</button>
-      <button class="book-filter-btn" onclick="filterBooks(this,'biz')">Business (2)</button>
-      <button class="book-filter-btn" onclick="filterBooks(this,'fiction')">Fiction (2)</button>
-      <button class="book-filter-btn" onclick="filterBooks(this,'history')">History (2)</button>
+    <div class="books-filter" id="books-filter">
+      <button class="book-filter-btn" data-cat="ai" onclick="toggleBookCat(this)">AI &amp; Engineering</button>
+      <button class="book-filter-btn" data-cat="sys" onclick="toggleBookCat(this)">Software Systems</button>
+      <button class="book-filter-btn" data-cat="phil" onclick="toggleBookCat(this)">Philosophy</button>
+      <button class="book-filter-btn" data-cat="biz" onclick="toggleBookCat(this)">Business</button>
+      <button class="book-filter-btn" data-cat="fiction" onclick="toggleBookCat(this)">Fiction</button>
+      <button class="book-filter-btn" data-cat="history" onclick="toggleBookCat(this)">History</button>
     </div>
+    <p style="font-size:0.75rem;color:var(--muted);margin-bottom:1rem;">tap a category to show books &mdash; tap again to hide &mdash; mix &amp; match freely</p>
     <div class="books-grid" id="books-grid">
-      <div class="book-item" data-cat="ai"><div class="book-num">1</div><div><div class="book-title">Designing Machine Learning Systems</div><div class="book-author">Chip Huyen</div></div></div>
-      <div class="book-item" data-cat="ai"><div class="book-num">2</div><div><div class="book-title">The Alignment Problem</div><div class="book-author">Brian Christian</div></div></div>
-      <div class="book-item" data-cat="ai"><div class="book-num">3</div><div><div class="book-title">Deep Learning</div><div class="book-author">Goodfellow, Bengio &amp; Courville</div></div></div>
-      <div class="book-item" data-cat="ai"><div class="book-num">4</div><div><div class="book-title">AI: A Modern Approach</div><div class="book-author">Russell &amp; Norvig</div></div></div>
-      <div class="book-item" data-cat="sys"><div class="book-num">5</div><div><div class="book-title">Clean Code</div><div class="book-author">Robert C. Martin</div></div></div>
-      <div class="book-item" data-cat="sys"><div class="book-num">6</div><div><div class="book-title">Designing Data-Intensive Applications</div><div class="book-author">Martin Kleppmann</div></div></div>
-      <div class="book-item" data-cat="sys"><div class="book-num">7</div><div><div class="book-title">The Pragmatic Programmer</div><div class="book-author">Hunt &amp; Thomas</div></div></div>
-      <div class="book-item" data-cat="phil"><div class="book-num">8</div><div><div class="book-title">The Age of Surveillance Capitalism</div><div class="book-author">Shoshana Zuboff</div></div></div>
-      <div class="book-item" data-cat="phil"><div class="book-num">9</div><div><div class="book-title">Thinking, Fast and Slow</div><div class="book-author">Daniel Kahneman</div></div></div>
-      <div class="book-item" data-cat="biz"><div class="book-num">10</div><div><div class="book-title">Shoe Dog</div><div class="book-author">Phil Knight</div></div></div>
-      <div class="book-item" data-cat="biz"><div class="book-num">11</div><div><div class="book-title">Zero to One</div><div class="book-author">Peter Thiel</div></div></div>
-      <div class="book-item" data-cat="fiction"><div class="book-num">12</div><div><div class="book-title">Eleanor Oliphant is Completely Fine</div><div class="book-author">Gail Honeyman</div></div></div>
-      <div class="book-item" data-cat="fiction"><div class="book-num">13</div><div><div class="book-title">The Silent Patient</div><div class="book-author">Alex Michaelides</div></div></div>
-      <div class="book-item" data-cat="history"><div class="book-num">14</div><div><div class="book-title">KGB and the World</div><div class="book-author">Christopher Andrew &amp; Vasili Mitrokhin</div></div></div>
-      <div class="book-item" data-cat="history"><div class="book-num">15</div><div><div class="book-title">India After Independence</div><div class="book-author">Bipan Chandra</div></div></div>
+      <div class="book-item" data-cat="ai">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9781098107963-M.jpg" alt="Designing Machine Learning Systems" onerror="this.style.display='none'" loading="lazy"/>
+        <div class="book-info">
+          
+          <div class="book-title">Designing Machine Learning Systems</div>
+          <div class="book-author">Chip Huyen</div>
+        </div>
+      </div>
+      <div class="book-item" data-cat="ai">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780393635829-M.jpg" alt="The Alignment Problem" onerror="this.style.display='none'" loading="lazy"/>
+        <div class="book-info">
+          
+          <div class="book-title">The Alignment Problem</div>
+          <div class="book-author">Brian Christian</div>
+        </div>
+      </div>
+      <div class="book-item" data-cat="ai">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780262035613-M.jpg" alt="Deep Learning" onerror="this.style.display='none'" loading="lazy"/>
+        <div class="book-info">
+          
+          <div class="book-title">Deep Learning</div>
+          <div class="book-author">Goodfellow, Bengio &amp; Courville</div>
+        </div>
+      </div>
+      <div class="book-item" data-cat="ai">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780136042594-M.jpg" alt="AI: A Modern Approach" onerror="this.style.display='none'" loading="lazy"/>
+        <div class="book-info">
+          
+          <div class="book-title">AI: A Modern Approach</div>
+          <div class="book-author">Russell &amp; Norvig</div>
+        </div>
+      </div>
+      <div class="book-item" data-cat="sys">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780132350884-M.jpg" alt="Clean Code" onerror="this.style.display='none'" loading="lazy"/>
+        <div class="book-info">
+          
+          <div class="book-title">Clean Code</div>
+          <div class="book-author">Robert C. Martin</div>
+        </div>
+      </div>
+      <div class="book-item" data-cat="sys">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9781449373320-M.jpg" alt="Designing Data-Intensive Applications" onerror="this.style.display='none'" loading="lazy"/>
+        <div class="book-info">
+          
+          <div class="book-title">Designing Data-Intensive Applications</div>
+          <div class="book-author">Martin Kleppmann</div>
+        </div>
+      </div>
+      <div class="book-item" data-cat="sys">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780135957059-M.jpg" alt="The Pragmatic Programmer" onerror="this.style.display='none'" loading="lazy"/>
+        <div class="book-info">
+          
+          <div class="book-title">The Pragmatic Programmer</div>
+          <div class="book-author">Hunt &amp; Thomas</div>
+        </div>
+      </div>
+      <div class="book-item" data-cat="phil">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9781610395694-M.jpg" alt="The Age of Surveillance Capitalism" onerror="this.style.display='none'" loading="lazy"/>
+        <div class="book-info">
+          
+          <div class="book-title">The Age of Surveillance Capitalism</div>
+          <div class="book-author">Shoshana Zuboff</div>
+        </div>
+      </div>
+      <div class="book-item" data-cat="phil">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780374533557-M.jpg" alt="Thinking, Fast and Slow" onerror="this.style.display='none'" loading="lazy"/>
+        <div class="book-info">
+          
+          <div class="book-title">Thinking, Fast and Slow</div>
+          <div class="book-author">Daniel Kahneman</div>
+        </div>
+      </div>
+      <div class="book-item" data-cat="biz">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9781501135910-M.jpg" alt="Shoe Dog" onerror="this.style.display='none'" loading="lazy"/>
+        <div class="book-info">
+          
+          <div class="book-title">Shoe Dog</div>
+          <div class="book-author">Phil Knight</div>
+        </div>
+      </div>
+      <div class="book-item" data-cat="biz">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780804139021-M.jpg" alt="Zero to One" onerror="this.style.display='none'" loading="lazy"/>
+        <div class="book-info">
+          
+          <div class="book-title">Zero to One</div>
+          <div class="book-author">Peter Thiel</div>
+        </div>
+      </div>
+      <div class="book-item" data-cat="fiction">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780008172145-M.jpg" alt="Eleanor Oliphant is Completely Fine" onerror="this.style.display='none'" loading="lazy"/>
+        <div class="book-info">
+          
+          <div class="book-title">Eleanor Oliphant is Completely Fine</div>
+          <div class="book-author">Gail Honeyman</div>
+        </div>
+      </div>
+      <div class="book-item" data-cat="fiction">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9781250301697-M.jpg" alt="The Silent Patient" onerror="this.style.display='none'" loading="lazy"/>
+        <div class="book-info">
+          
+          <div class="book-title">The Silent Patient</div>
+          <div class="book-author">Alex Michaelides</div>
+        </div>
+      </div>
+      <div class="book-item" data-cat="history">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780465003105-M.jpg" alt="KGB and the World" onerror="this.style.display='none'" loading="lazy"/>
+        <div class="book-info">
+          
+          <div class="book-title">KGB and the World</div>
+          <div class="book-author">Christopher Andrew &amp; Vasili Mitrokhin</div>
+        </div>
+      </div>
+      <div class="book-item" data-cat="history">
+        <img class="book-cover" src="data:image/webp;base64,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" alt="India After Independence" loading="lazy"/>
+        <div class="book-info">
+          
+          <div class="book-title">India After Independence</div>
+          <div class="book-author">Bipan Chandra, Mridula Mukherjee &amp; Aditya Mukherjee</div>
+        </div>
+      </div>
     </div>
-    </div>
-  </div>
-
-  <!-- ACHIEVEMENTS -->
-  <div class="card" id="achievements">
-    <div class="card-title">Achievements.</div>
-    <button class="section-toggle" onclick="toggleSection(this,'achievements-body')">Hide ↑</button>
-    <div id="achievements-body" class="section-body">
-    <div class="ach-list">
-      <div class="ach-item"><span class="ach-icon">🏅</span><div><div class="ach-title">NTSE Qualifier</div><div class="ach-desc">Selected among top-performing students nationwide in Stage I of the National Talent Search Examination (Govt. of India).</div></div></div>
-      <div class="ach-item"><span class="ach-icon">🎭</span><div><div class="ach-title">Street Play – 1st Place</div><div class="ach-desc">1st at Jain University & BITS Pilani Goa (Oasis Fest) — teamwork, creativity, public communication.</div></div></div>
-      <div class="ach-item"><span class="ach-icon">🎬</span><div><div class="ach-title">CARV Hindi Theatre</div><div class="ach-desc">Writer and actor in multiple theatre productions across Bangalore and national-level events.</div></div></div>
-      <div class="ach-item"><span class="ach-icon">📚</span><div><div class="ach-title">Teaching Assistant – UPAY NGO</div><div class="ach-desc">Mentored underprivileged students in Mathematics and English through structured sessions.</div></div></div>
-      <div class="ach-item"><span class="ach-icon">💻</span><div><div class="ach-title">Competitive Programming</div><div class="ach-desc">400+ DSA problems on GeeksforGeeks. Multiple verified skill badges on HackerRank.</div></div></div>
-    </div>
-    </div>
-  </div>
-
-  <!-- CERTIFICATIONS -->
-  <div class="card" id="certifications">
-    <div class="card-title">Certifications.</div>
-    <button class="section-toggle" onclick="toggleSection(this,'certifications-body')">Hide ↑</button>
-    <div id="certifications-body" class="section-body">
-    <div class="cert-list">
-      <div class="cert-item"><span class="cert-badge">NPTEL</span><span class="cert-name">Joy of Computing with Python – Elite Silver Medal</span></div>
-      <div class="cert-item"><span class="cert-badge">AWS</span><span class="cert-name">Introduction to Machine Learning and its Projects</span></div>
-      <div class="cert-item"><span class="cert-badge">AWS</span><span class="cert-name">Planning of Machine Learning Projects</span></div>
-      <div class="cert-item"><span class="cert-badge">AWS</span><span class="cert-name">Introduction to Machine Learning: Art of Possibles</span></div>
-      <div class="cert-item"><span class="cert-badge">HCL GUVI</span><span class="cert-name">Build a Face Recognition Application Using Python</span></div>
     </div>
     </div>
   </div>
@@ -882,7 +1265,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
     </div>
   </div>
 
-  <div class="<!-- GITHUB ACTIVITY -->
+  <!-- GITHUB ACTIVITY -->
   <div class="card" id="github">
     <div class="card-title" style="text-align:center;">My GitHub Activity.</div>
     <p class="card-sub" style="text-align:center;">Here's my contribution graph showing my coding activity over the past year.</p>
@@ -931,7 +1314,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
     <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
   </a>
   <!-- Email icon -->
-  <a class="nav-icon" href="#contact" title="Contact">
+  <a class="nav-icon" href="https://mail.google.com/mail/?view=cm&fs=1&to=akv09072002@gmail.com" target="_blank" title="Email">
     <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
   </a>
   <div class="nav-sep"></div>
@@ -971,11 +1354,20 @@ function toggleSection(btn, id) {
     setTimeout(() => window._leafletMap.invalidateSize(), 460);
   }
 }
-function toggleAbout(btn) {
-  const body = document.getElementById('about-body');
-  const isCollapsed = body.classList.contains('collapsed');
-  body.classList.toggle('collapsed', !isCollapsed);
-  btn.textContent = isCollapsed ? 'Hide ↑' : 'Show ↓';
+function toggleAbout() {
+  var summary = document.getElementById('about-summary');
+  var detail  = document.getElementById('about-detail');
+  var isOpen  = detail.classList.contains('open');
+  if (isOpen) {
+    detail.classList.remove('open');
+    summary.classList.remove('open');
+    setTimeout(function() {
+      document.getElementById('about').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
+  } else {
+    detail.classList.add('open');
+    summary.classList.add('open');
+  }
 }
 function toggleWork(item, id) {
   const detail = document.getElementById(id);
@@ -984,13 +1376,23 @@ function toggleWork(item, id) {
   document.querySelectorAll('.work-item').forEach(i => i.classList.remove('expanded'));
   if (!isOpen) { detail.classList.add('open'); item.classList.add('expanded'); }
 }
-function filterBooks(btn, cat) {
-  document.querySelectorAll('.book-filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('#books-grid .book-item').forEach(item => {
-    item.style.display = (cat === 'all' || item.dataset.cat === cat) ? 'flex' : 'none';
+function toggleBookCat(btn) {
+  btn.classList.toggle('active');
+  var active = Array.from(document.querySelectorAll('.book-filter-btn.active')).map(b => b.dataset.cat);
+  document.querySelectorAll('#books-grid .book-item').forEach(function(item) {
+    if (active.length === 0) {
+      item.style.display = 'none';
+    } else {
+      item.style.display = active.includes(item.dataset.cat) ? 'flex' : 'none';
+    }
   });
 }
+// Init: hide all books until a category is selected
+(function() {
+  document.querySelectorAll('#books-grid .book-item').forEach(function(item) {
+    item.style.display = 'none';
+  });
+})();
 const navLinks = document.querySelectorAll('.bottom-nav .nav-icon[href^="#"]');
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => {
