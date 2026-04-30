@@ -35,6 +35,15 @@
   --tag-text: #4db8a6;
   --nav-bg: rgba(20,19,17,0.93);
 }
+.proj-github-link {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  margin-top: 0.75rem; font-size: 0.75rem; font-weight: 500;
+  color: var(--accent); text-decoration: none;
+  border: 1px solid var(--tag-bg); border-radius: 999px;
+  padding: 0.25rem 0.75rem; background: var(--tag-bg);
+  transition: all 0.15s;
+}
+.proj-github-link:hover { border-color: var(--accent); background: transparent; }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body { background: var(--bg); color: var(--text); font-family: var(--font); font-size: 15px; line-height: 1.6; min-height: 100vh; transition: background 0.3s, color 0.3s; }
@@ -118,6 +127,42 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
 .hero-social-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--tag-bg); }
 .hero-social-btn svg { width: 15px; height: 15px; fill: currentColor; flex-shrink: 0; }
 
+/* ABOUT - IDENTITY PILLS */
+.about-identity-row {
+  display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 0.6rem; margin-bottom: 0.2rem;
+}
+.about-pill {
+  font-size: 0.75rem; font-weight: 600; padding: 0.3rem 0.85rem;
+  border-radius: 999px; background: var(--tag-bg); color: var(--tag-text);
+  border: 1px solid var(--border); letter-spacing: 0.01em;
+}
+/* ABOUT - BLOCKS */
+.about-block {
+  margin-bottom: 1.25rem;
+  padding: 1.1rem 1.25rem;
+  border-radius: 12px;
+  background: var(--card2);
+  border: 1px solid var(--border);
+  transition: border-color 0.15s, background 0.3s;
+}
+.about-block:hover { border-color: var(--accent); }
+.about-block-label {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.09em; color: var(--accent); margin-bottom: 0.6rem;
+}
+.about-emoji { font-size: 1rem; }
+.about-block p { font-size: 0.87rem; color: var(--muted); line-height: 1.8; margin: 0; }
+/* ABOUT - STATUS CHIPS */
+.about-status-row {
+  display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.4rem;
+}
+.about-status-chip {
+  font-size: 0.76rem; font-weight: 500; padding: 0.35rem 0.9rem;
+  border-radius: 999px; border: 1.5px solid var(--border);
+  color: var(--text); background: var(--card);
+}
+
 /* ABOUT */
 .about-body { font-size: 0.9rem; color: var(--muted); line-height: 1.85; overflow: hidden; max-height: 2000px; opacity: 1; transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease; }
 .about-body.collapsed { max-height: 0; opacity: 0; }
@@ -198,6 +243,18 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
 }
 .tech-section-label:first-child { margin-top: 0; }
 
+/* TECH STACK EXTRA (hidden by default) */
+.tech-extra {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.55s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease;
+}
+.tech-extra.expanded {
+  max-height: 1200px;
+  opacity: 1;
+}
+
 /* COLLAPSIBLE CARDS */
 .section-toggle {
   display: inline-flex; align-items: center; gap: 0.35rem;
@@ -242,19 +299,90 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
 .proj-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
 .proj-tag { font-size: 0.62rem; padding: 0.18rem 0.5rem; background: var(--tag-bg); color: var(--tag-text); border-radius: 999px; font-weight: 500; }
 
-/* BOOKS */
-.books-filter { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 1.6rem; }
-.book-filter-btn {
-  font-size: 0.78rem; padding: 0.32rem 0.85rem; border-radius: 999px;
-  border: 1.5px solid var(--border); background: white; color: var(--muted);
-  cursor: pointer; font-family: var(--font); transition: all 0.15s;
+/* PROJECTS COLLAPSIBLE */
+.proj-more-wrap {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.55s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease;
 }
-.book-filter-btn.active, .book-filter-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--tag-bg); }
-.books-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
-.book-item { display: flex; align-items: flex-start; gap: 0.8rem; padding: 0.65rem 0.85rem; border: 1px solid var(--border); border-radius: 10px; background: var(--card); transition: background 0.3s; }
-.book-num { font-size: 0.7rem; color: var(--muted); font-weight: 600; min-width: 18px; padding-top: 0.1rem; }
-.book-title { font-size: 0.82rem; font-weight: 600; margin-bottom: 0.1rem; line-height: 1.3; }
-.book-author { font-size: 0.71rem; color: var(--muted); }
+.proj-more-wrap.open {
+  max-height: 800px;
+  opacity: 1;
+}
+
+/* UNIQUE SQUARE EXPAND BUTTON */
+.proj-sq-btn {
+  position: relative;
+  width: 44px; height: 44px;
+  border-radius: 14px;
+  border: 1.5px solid var(--border);
+  background: var(--card2);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.22s, background 0.22s, box-shadow 0.22s, transform 0.22s;
+  overflow: hidden;
+}
+.proj-sq-btn::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--tag-bg);
+  opacity: 0;
+  transition: opacity 0.22s;
+  border-radius: inherit;
+}
+.proj-sq-btn:hover { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(42,125,111,0.1); transform: translateY(-1px); }
+.proj-sq-btn:hover::before { opacity: 1; }
+.proj-sq-chevron {
+  width: 18px; height: 18px;
+  color: var(--muted);
+  transition: transform 0.42s cubic-bezier(0.4,0,0.2,1), color 0.22s;
+  position: relative; z-index: 1;
+  flex-shrink: 0;
+}
+.proj-sq-btn:hover .proj-sq-chevron { color: var(--accent); }
+.proj-sq-btn.open .proj-sq-chevron { transform: rotate(180deg); }
+
+/* BOOKS */
+/* BOOK CATEGORIES */
+.books-categories { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-bottom: 1.6rem; justify-content: center; }
+.book-cat-btn {
+  font-size: 0.8rem; padding: 0.42rem 1rem; border-radius: 999px;
+  border: 1.5px solid var(--border); background: var(--card); color: var(--muted);
+  cursor: pointer; font-family: var(--font); transition: all 0.18s; font-weight: 500;
+}
+.book-cat-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--tag-bg); }
+.book-cat-btn.active { border-color: var(--accent); color: var(--accent); background: var(--tag-bg); font-weight: 600; }
+/* BOOK COVERS GRID */
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 1rem;
+}
+.book-item {
+  display: flex; flex-direction: column; align-items: center;
+  cursor: default; transition: transform 0.18s;
+}
+.book-item:hover { transform: translateY(-3px); }
+.book-cover {
+  width: 100%; aspect-ratio: 2/3; border-radius: 6px;
+  object-fit: cover; border: 1px solid var(--border);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.13);
+  background: var(--card2); display: block;
+}
+.book-cover-placeholder {
+  width: 100%; aspect-ratio: 2/3; border-radius: 6px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  background: linear-gradient(135deg, var(--tag-bg), var(--card2));
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 0.5rem; text-align: center; gap: 0.4rem;
+}
+.book-cover-placeholder-icon { font-size: 1.6rem; }
+.book-cover-placeholder-text { font-size: 0.6rem; color: var(--accent); font-weight: 600; line-height: 1.3; }
+.book-meta { margin-top: 0.5rem; text-align: center; width: 100%; }
+.book-title { font-size: 0.72rem; font-weight: 600; line-height: 1.25; margin-bottom: 0.18rem; }
+.book-author { font-size: 0.65rem; color: var(--muted); line-height: 1.3; }
 
 /* ACHIEVEMENTS */
 .ach-list { display: flex; flex-direction: column; gap: 0.65rem; }
@@ -262,6 +390,40 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
 .ach-icon { font-size: 1.15rem; flex-shrink: 0; margin-top: 0.05rem; }
 .ach-title { font-size: 0.88rem; font-weight: 600; margin-bottom: 0.12rem; }
 .ach-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+/* ACHIEVEMENTS COLLAPSIBLE */
+.ach-more-wrap {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.48s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease;
+}
+.ach-more-wrap.open { max-height: 600px; opacity: 1; }
+/* CHEVRON BUTTON */
+.ach-chevron-btn {
+  background: none; border: none; cursor: pointer; padding: 0;
+  display: flex; align-items: center; justify-content: center; outline: none;
+}
+.ach-chevron-track {
+  position: relative; display: flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--card2);
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s; overflow: hidden;
+}
+.ach-chevron-btn:hover .ach-chevron-track {
+  border-color: var(--accent); background: var(--tag-bg);
+  box-shadow: 0 0 0 4px rgba(42,125,111,0.1);
+}
+.ach-chevron-dot {
+  position: absolute; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent); opacity: 0; transition: opacity 0.2s, transform 0.3s; transform: scale(0);
+}
+.ach-chevron-btn:hover .ach-chevron-dot { opacity: 1; transform: scale(1); }
+.ach-chevron-svg {
+  width: 18px; height: 18px; color: var(--muted);
+  transition: transform 0.38s cubic-bezier(0.4,0,0.2,1), color 0.2s; position: relative; z-index: 1;
+}
+.ach-chevron-btn:hover .ach-chevron-svg { color: var(--accent); }
+.ach-chevron-btn.open .ach-chevron-svg { transform: rotate(180deg); }
 
 /* MAP */
 #map { height: 290px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); margin-bottom: 1.2rem; }
@@ -301,7 +463,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
   .hero-avatar { width: 110px; height: 110px; font-size: 1.5rem; margin-bottom: 1.3rem; }
   .card-title { font-size: 1.5rem; }
   .projects-grid { grid-template-columns: 1fr; }
-  .books-grid { grid-template-columns: 1fr; }
+  .books-grid { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 0.75rem; }
   .contact-grid { grid-template-columns: 1fr; }
   .work-item { padding: 0.8rem 0.8rem; gap: 0.6rem; }
   .work-logo { width: 38px; height: 38px; border-radius: 8px; font-size: 0.62rem; }
@@ -320,14 +482,109 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
   .cert-name { font-size: 0.78rem; }
   #map { height: 220px; }
   .contact-card { padding: 1.2rem 0.8rem; }
-  .books-filter { gap: 0.35rem; }
-  .book-filter-btn { font-size: 0.72rem; padding: 0.28rem 0.7rem; }
+  .books-categories { gap: 0.35rem; }
+  .book-cat-btn { font-size: 0.72rem; padding: 0.28rem 0.7rem; }
   .project-thumb { height: 110px; font-size: 2.2rem; }
   .project-body { padding: 0.85rem 0.9rem; }
   .tech-icon { width: 52px; }
   .tech-icon img { width: 32px; height: 32px; }
 }
 
+/* ===== FISH ANIMATION ===== */
+
+#fish-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh; /* ensures full screen */
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 50;
+}
+
+.fish {
+  position: absolute;
+  font-size: 20px;
+  opacity: 0.9;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);;
+  will-change: transform;
+}
+.fish:nth-child(odd) {
+  opacity: 0.5;
+  transform: scale(0.8);
+}
+
+/* LEFT → RIGHT */
+@keyframes swimLR {
+  from { transform: translateX(-100px) translateY(0); }
+  to { transform: translateX(110vw) translateY(-50px); }
+}
+
+@keyframes swimRL {
+  from { transform: translateX(110vw) translateY(0); }
+  to { transform: translateX(-100px) translateY(50px); }
+}
+@keyframes swimLR {
+  from { transform: translateX(-100px); }
+  to { transform: translateX(110vw); }
+}
+
+/* RIGHT → LEFT */
+@keyframes swimRL {
+  from { transform: translateX(110vw); }
+  to { transform: translateX(-100px); }
+}
+
+/* TOP → BOTTOM */
+@keyframes swimTB {
+  from { transform: translateY(-100px); }
+  to { transform: translateY(110vh); }
+}
+@keyframes swimLR {
+  from { transform: translateX(-60px) translateY(0); }
+  to { transform: translateX(110vw) translateY(-60px); }
+}
+@keyframes swimLR {
+  0%   { transform: translateX(-60px) translateY(0); }
+  50%  { transform: translateX(50vw) translateY(-30px); }
+  100% { transform: translateX(110vw) translateY(20px); }
+}
+
+@keyframes swimRL {
+  0%   { transform: translateX(110vw) translateY(0); }
+  50%  { transform: translateX(50vw) translateY(30px); }
+  100% { transform: translateX(-60px) translateY(-20px); }
+}
+/* ===== BUBBLES ===== */
+
+.bubble {
+  position: absolute;
+  bottom: -40px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.6);
+  opacity: 0.7;
+  animation: bubbleUp linear forwards;
+}
+
+@keyframes bubbleUp {
+  from {
+    transform: translateY(0) scale(0.6);
+    opacity: 0.6;
+  }
+  to {
+    transform: translateY(-110vh) scale(1.2);
+    opacity: 0;
+  }
+}
+.nav-icon svg { fill: currentColor; }
+
+@keyframes swim {
+  0% { transform: translateX(-100px); }
+  100% { transform: translateX(110vw); }
+}
 @media (max-width: 420px) {
   .hero-name { font-size: 2rem; }
   .card { padding: 1.3rem 1rem; }
@@ -438,6 +695,75 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
   display: flex; align-items: center; gap: 0.85rem;
 }
 
+/* MAIL PICKER POPUP */
+.mail-backdrop {
+  display: none;
+  position: fixed; inset: 0; z-index: 199;
+}
+.mail-picker {
+  position: fixed;
+  bottom: 5.5rem; left: 50%; transform: translateX(-50%) translateY(12px);
+  z-index: 200;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 0.6rem 0.6rem;
+  min-width: 230px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.13), 0 2px 8px rgba(0,0,0,0.07);
+  display: none;
+  flex-direction: column;
+  gap: 0.2rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.22s cubic-bezier(0.34,1.56,0.64,1);
+}
+.mail-picker.open {
+  display: flex;
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(-50%) translateY(0);
+}
+.mail-picker-label {
+  font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--muted);
+  padding: 0.3rem 0.7rem 0.4rem;
+}
+.mail-option {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 11px;
+  text-decoration: none; color: var(--text);
+  transition: background 0.13s;
+  cursor: pointer;
+}
+.mail-option:hover { background: var(--tag-bg); color: var(--accent); }
+.mail-option:hover .mail-option-arrow { opacity: 1; transform: translateX(0); }
+.mail-option-icon { width: 22px; height: 22px; flex-shrink: 0; }
+.mail-option-name { font-size: 0.88rem; font-weight: 500; flex: 1; }
+.mail-picker-email {
+  display: flex; align-items: center; gap: 0.4rem;
+  font-size: 0.78rem; font-weight: 500; color: var(--accent);
+  background: var(--tag-bg); border-radius: 8px;
+  padding: 0.4rem 0.5rem 0.4rem 0.75rem; margin: 0 0 0.25rem;
+  letter-spacing: 0.01em;
+}
+.mail-copy-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; flex-shrink: 0;
+  border: none; background: transparent; cursor: pointer;
+  border-radius: 6px; color: var(--accent);
+  transition: background 0.15s, color 0.15s;
+  padding: 0;
+}
+.mail-copy-btn:hover { background: rgba(42,125,111,0.15); }
+.mail-copy-btn.copied { color: #22c55e; }
+.mail-copy-icon, .mail-check-icon { width: 13px; height: 13px; }
+.mail-option-arrow {
+  width: 14px; height: 14px; color: var(--accent);
+  opacity: 0; transform: translateX(-4px);
+  transition: opacity 0.15s, transform 0.15s; flex-shrink: 0;
+}
+
 </style>
 </head>
 <body>
@@ -457,12 +783,52 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
   <!-- ABOUT -->
   <div class="card" id="about">
     <div class="card-title">About.</div>
-    <button class="section-toggle" onclick="toggleSection(this,'about-body')">Hide ↑</button>
-    <div class="section-body" id="about-body">
-      <p>I'm a software engineer who thrives at the intersection of AI research and production engineering. I've architected compliance-focused agentic AI platforms, automated hardware testing pipelines at Tektronix, and engineered full-stack newsletter products powered by LLMs.</p>
-      <p>I care about systems that are not just clever but reliable, observable, and easy to maintain. Whether it's a RAG pipeline hitting 30% lower latency or a clean React UI with proper RBAC — the details matter.</p>
-      <p>Outside of code, I enjoy theatre. I've written and performed in multiple productions across Bangalore and at national-level events with CARV Hindi Theatre. I also mentor underprivileged students in mathematics and believe strongly in accessible education.</p>
-      <p>When I'm not coding, you'll find me grinding DSA problems (400+ solved), exploring Bangalore's food scene, or rehearsing for the next street play.</p>
+    <div class="about-identity-row">
+      <span class="about-pill">🤖 AI Engineer</span>
+      <span class="about-pill">⚡ Full-Stack</span>
+      <span class="about-pill">🎭 Theatre Kid</span>
+      <span class="about-pill">📚 DSA Grinder</span>
+      <span class="about-pill">📍 Bangalore</span>
+    </div>
+    <button class="section-toggle" onclick="toggleSection(this,'about-body')" style="margin-top:1rem;">Show ↓</button>
+    <div class="section-body collapsed" id="about-body">
+
+      <div class="about-block">
+        <div class="about-block-label"><span class="about-emoji">👋</span> who am i</div>
+        <p>hey, i'm Abhinav Verma — a software engineer from Lucknow, now living my best life in Bangalore. i build things at the intersection of AI and production systems. not just the "look ma, i used GPT" kind — i mean actual agentic pipelines, LLM routers, RAG systems with real latency wins.</p>
+      </div>
+
+      <div class="about-block">
+        <div class="about-block-label"><span class="about-emoji">🛠️</span> what i actually do</div>
+        <p>currently building an AI-powered newsletter platform at Astilbe Page — full-stack (React + Node.js + MongoDB), LLM routing with Mistral-7B, RBAC, email pipelines, the works. before that, i was at Tektronix automating hardware testing with Python and SCPI, and at Astilbe Page (Pune), building compliance-focused AI agents. graduated from RVCE Bangalore with a degree in Electrical &amp; Electronics Engineering — that's where the chaos began.</p>
+      </div>
+
+      <div class="about-block">
+        <div class="about-block-label"><span class="about-emoji">🧠</span> the tech obsession</div>
+        <p>i care deeply about systems that aren't just clever — they have to be reliable, observable, and maintainable. a RAG pipeline that shaved 30% latency? satisfying. a clean React UI with proper RBAC? equally satisfying. i've got 400+ DSA problems solved on LeetCode, which is either impressive or a cry for help, honestly.</p>
+      </div>
+
+      <div class="about-block">
+        <div class="about-block-label"><span class="about-emoji">🎭</span> the plot twist — i do theatre</div>
+        <p>yeah, the AI engineer writes and performs street plays. i've done multiple productions across Bangalore and national-level events with CARV Hindi Theatre. theatre taught me storytelling, improvisation, and how to hold a room — skills that surprisingly transfer to technical presentations and team collaboration.</p>
+      </div>
+
+      <div class="about-block">
+        <div class="about-block-label"><span class="about-emoji">📐</span> giving back</div>
+        <p>i mentor underprivileged students in mathematics. accessible education is something i believe in genuinely — not just as a tagline. grew up in Lucknow, studied in Kanpur, grinded through Bangalore — i know what it means to figure things out without a playbook.</p>
+      </div>
+
+      <div class="about-block" style="margin-bottom:0;">
+        <div class="about-block-label"><span class="about-emoji">☕</span> when i'm not shipping</div>
+        <p style="margin-bottom:1.4rem;">exploring Bangalore's ever-growing food scene, rehearsing for the next play, or deep in a DSA rabbit hole at 2am. occasionally touch grass. sometimes in that order.</p>
+      </div>
+
+      <div class="about-status-row">
+        <span class="about-status-chip">🚀 Building @ Astilbe Page</span>
+        <span class="about-status-chip">🟢 Open to interesting roles</span>
+        <span class="about-status-chip">🎓 RVCE EEE '24</span>
+      </div>
+
     </div>
   </div>
 
@@ -568,7 +934,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
     <button class="section-toggle" onclick="toggleSection(this,'techstack-body')">Hide ↑</button>
     <div id="techstack-body" class="section-body">
 
-      <!-- Row 1: Languages & Environments -->
+      <!-- Row 1: Languages & Environments — first 4 always visible -->
       <div class="tech-section-label">Languages &amp; Environments</div>
       <div class="tech-banner-row">
         <div class="tech-banner-wrapper">
@@ -594,104 +960,99 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
         </div>
       </div>
 
-      <!-- Row 2: ML & AI Frameworks -->
-      <div class="tech-section-label">ML &amp; AI Frameworks</div>
-      <div class="tech-banner-row">
-        <div class="tech-banner-wrapper">
-          <div class="tech-track tech-track-row2" id="track2">
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch"/><span class="tech-icon-label">PyTorch</span></div>
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow"/><span class="tech-icon-label">TensorFlow</span></div>
-            <div class="tech-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg" alt="Scikit-learn"/><span class="tech-icon-label">Scikit-learn</span></div>
-            <div class="tech-icon"><img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Transformers"/><span class="tech-icon-label">Transformers</span></div>
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" alt="NumPy"/><span class="tech-icon-label">NumPy</span></div>
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" alt="Pandas"/><span class="tech-icon-label">Pandas</span></div>
-            <!-- duplicate -->
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch"/><span class="tech-icon-label">PyTorch</span></div>
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow"/><span class="tech-icon-label">TensorFlow</span></div>
-            <div class="tech-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg" alt="Scikit-learn"/><span class="tech-icon-label">Scikit-learn</span></div>
-            <div class="tech-icon"><img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Transformers"/><span class="tech-icon-label">Transformers</span></div>
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" alt="NumPy"/><span class="tech-icon-label">NumPy</span></div>
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" alt="Pandas"/><span class="tech-icon-label">Pandas</span></div>
-          </div>
-        </div>
-      </div>
+      <!-- Rows 2–4: hidden by default -->
+      <div class="tech-extra" id="tech-extra">
 
-      <!-- Row 3: Web Development -->
-      <div class="tech-section-label">Web Development</div>
-      <div class="tech-banner-row">
-        <div class="tech-banner-wrapper">
-          <div class="tech-track" id="track3">
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React"/><span class="tech-icon-label">React</span></div>
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" alt="Next.js"/><span class="tech-icon-label">Next.js</span></div>
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind CSS"/><span class="tech-icon-label">Tailwind CSS</span></div>
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/threejs/threejs-original.svg" alt="Three.js"/><span class="tech-icon-label">Three.js</span></div>
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js"/><span class="tech-icon-label">Node.js</span></div>
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" alt="Flask"/><span class="tech-icon-label">Flask</span></div>
-            <!-- duplicate -->
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React"/><span class="tech-icon-label">React</span></div>
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" alt="Next.js"/><span class="tech-icon-label">Next.js</span></div>
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind CSS"/><span class="tech-icon-label">Tailwind CSS</span></div>
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/threejs/threejs-original.svg" alt="Three.js"/><span class="tech-icon-label">Three.js</span></div>
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js"/><span class="tech-icon-label">Node.js</span></div>
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" alt="Flask"/><span class="tech-icon-label">Flask</span></div>
+        <!-- Row 2: ML & AI Frameworks -->
+        <div class="tech-section-label">ML &amp; AI Frameworks</div>
+        <div class="tech-banner-row">
+          <div class="tech-banner-wrapper">
+            <div class="tech-track tech-track-row2" id="track2">
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch"/><span class="tech-icon-label">PyTorch</span></div>
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow"/><span class="tech-icon-label">TensorFlow</span></div>
+              <div class="tech-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg" alt="Scikit-learn"/><span class="tech-icon-label">Scikit-learn</span></div>
+              <div class="tech-icon"><img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Transformers"/><span class="tech-icon-label">Transformers</span></div>
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" alt="NumPy"/><span class="tech-icon-label">NumPy</span></div>
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" alt="Pandas"/><span class="tech-icon-label">Pandas</span></div>
+              <!-- duplicate -->
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch"/><span class="tech-icon-label">PyTorch</span></div>
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow"/><span class="tech-icon-label">TensorFlow</span></div>
+              <div class="tech-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg" alt="Scikit-learn"/><span class="tech-icon-label">Scikit-learn</span></div>
+              <div class="tech-icon"><img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Transformers"/><span class="tech-icon-label">Transformers</span></div>
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" alt="NumPy"/><span class="tech-icon-label">NumPy</span></div>
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" alt="Pandas"/><span class="tech-icon-label">Pandas</span></div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Row 4: Backend & DevOps -->
-      <div class="tech-section-label">Backend &amp; DevOps</div>
-      <div class="tech-banner-row" style="margin-bottom:0;">
-        <div class="tech-banner-wrapper">
-          <div class="tech-track tech-track-row2" id="track4">
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL"/><span class="tech-icon-label">MySQL</span></div>
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"/><span class="tech-icon-label">Docker</span></div>
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git"/><span class="tech-icon-label">Git</span></div>
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub"/><span class="tech-icon-label">GitHub</span></div>
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"/><span class="tech-icon-label">PostgreSQL</span></div>
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg" alt="AWS"/><span class="tech-icon-label">AWS</span></div>
-            <!-- duplicate -->
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL"/><span class="tech-icon-label">MySQL</span></div>
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"/><span class="tech-icon-label">Docker</span></div>
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git"/><span class="tech-icon-label">Git</span></div>
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub"/><span class="tech-icon-label">GitHub</span></div>
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"/><span class="tech-icon-label">PostgreSQL</span></div>
-            <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg" alt="AWS"/><span class="tech-icon-label">AWS</span></div>
+        <!-- Row 3: Web Development -->
+        <div class="tech-section-label">Web Development</div>
+        <div class="tech-banner-row">
+          <div class="tech-banner-wrapper">
+            <div class="tech-track" id="track3">
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React"/><span class="tech-icon-label">React</span></div>
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" alt="Next.js"/><span class="tech-icon-label">Next.js</span></div>
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind CSS"/><span class="tech-icon-label">Tailwind CSS</span></div>
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/threejs/threejs-original.svg" alt="Three.js"/><span class="tech-icon-label">Three.js</span></div>
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js"/><span class="tech-icon-label">Node.js</span></div>
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" alt="Flask"/><span class="tech-icon-label">Flask</span></div>
+              <!-- duplicate -->
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React"/><span class="tech-icon-label">React</span></div>
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" alt="Next.js"/><span class="tech-icon-label">Next.js</span></div>
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind CSS"/><span class="tech-icon-label">Tailwind CSS</span></div>
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/threejs/threejs-original.svg" alt="Three.js"/><span class="tech-icon-label">Three.js</span></div>
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js"/><span class="tech-icon-label">Node.js</span></div>
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" alt="Flask"/><span class="tech-icon-label">Flask</span></div>
+            </div>
           </div>
         </div>
-      </div>
+
+        <!-- Row 4: Backend & DevOps -->
+        <div class="tech-section-label">Backend &amp; DevOps</div>
+        <div class="tech-banner-row" style="margin-bottom:0;">
+          <div class="tech-banner-wrapper">
+            <div class="tech-track tech-track-row2" id="track4">
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL"/><span class="tech-icon-label">MySQL</span></div>
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"/><span class="tech-icon-label">Docker</span></div>
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git"/><span class="tech-icon-label">Git</span></div>
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub"/><span class="tech-icon-label">GitHub</span></div>
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"/><span class="tech-icon-label">PostgreSQL</span></div>
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg" alt="AWS"/><span class="tech-icon-label">AWS</span></div>
+              <!-- duplicate -->
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL"/><span class="tech-icon-label">MySQL</span></div>
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"/><span class="tech-icon-label">Docker</span></div>
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git"/><span class="tech-icon-label">Git</span></div>
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub"/><span class="tech-icon-label">GitHub</span></div>
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"/><span class="tech-icon-label">PostgreSQL</span></div>
+              <div class="tech-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg" alt="AWS"/><span class="tech-icon-label">AWS</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /tech-extra -->
+      <!-- Single toggle button always at the bottom of visible content -->
+      <button id="tech-show-btn" onclick="toggleTechExtra()" title="Toggle tech stack" style="display:flex;align-items:center;justify-content:center;margin:0.8rem auto 0;width:32px;height:32px;border-radius:50%;border:1.5px solid var(--border);background:var(--card2);cursor:pointer;transition:all 0.2s;color:var(--muted);" onmouseenter="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">
+        <svg id="tech-btn-icon" viewBox="0 0 24 24" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;transition:transform 0.5s cubic-bezier(0.4,0,0.2,1);"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
 
     </div>
   </div>
 
   <!-- PROJECTS -->
   <div class="card" id="projects">
-    <div class="card-title" style="text-align:center;">Check out my latest work.</div>
+    <div class="card-title" style="text-align:center;">Check out my latest work</div>
     <p class="card-sub" style="text-align:center;">I've worked on a variety of projects, from ML models to full-stack web apps.</p>
-    <button class="section-toggle" onclick="toggleSection(this,'projects-body')">Hide ↑</button>
-    <div id="projects-body" class="section-body">
     <div class="projects-grid">
       <div class="project-card">
-        <div class="project-thumb p1">₿</div>
+        <div class="project-thumb p3">🔥</div>
         <div class="project-body">
-          <h3>Know BTC</h3><div class="proj-year">2024</div>
-          <p>OHLC Bitcoin Market Analyzer using XGBoost & Random Forest. Uncovered price patterns with interactive Plotly visualisations.</p>
-          <div class="proj-tags"><span class="proj-tag">Python</span><span class="proj-tag">XGBoost</span><span class="proj-tag">Plotly</span><span class="proj-tag">Pandas</span></div>
-        </div>
-      </div>
-      <div class="project-card">
-        <div class="project-thumb p2">📈</div>
-        <div class="project-body">
-          <h3>Predict-or</h3><div class="proj-year">2023 – Present</div>
-          <p>Stock price predictor using LSTM deep learning. Achieved 98.9% prediction accuracy with robust preprocessing.</p>
-          <div class="proj-tags"><span class="proj-tag">TensorFlow</span><span class="proj-tag">LSTM</span><span class="proj-tag">scikit-learn</span></div>
-        </div>
-      </div>
-      <div class="project-card">
-        <div class="project-thumb p3">📚</div>
-        <div class="project-body">
-          <h3>Book Matchmaker</h3><div class="proj-year">2023</div>
-          <p>Recommendation engine using collaborative filtering and cosine similarity for personalised book suggestions.</p>
-          <div class="proj-tags"><span class="proj-tag">Python</span><span class="proj-tag">scikit-learn</span><span class="proj-tag">JavaScript</span></div>
+          <h3>ByteForge</h3><div class="proj-year">2024</div>
+          <p>GPT built from scratch in PyTorch — byte-level tokenizer, multi-head causal self-attention, LoRA fine-tuning, SFT &amp; RLHF reward model. Served via FastAPI with top-k sampling. No Hugging Face dependencies.</p>
+          <div class="proj-tags"><span class="proj-tag">PyTorch</span><span class="proj-tag">LoRA</span><span class="proj-tag">RLHF</span><span class="proj-tag">FastAPI</span><span class="proj-tag">Transformers</span></div>
+          <a href="https://github.com/abhinav09072002/-ByteForge" target="_blank" class="proj-github-link">
+            <svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:currentColor;flex-shrink:0;"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            View on GitHub
+          </a>
         </div>
       </div>
       <div class="project-card">
@@ -700,9 +1061,49 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
           <h3>Campus Wave</h3><div class="proj-year">2023</div>
           <p>Full-stack college management system with React, Django REST Framework, and optimised PostgreSQL backend.</p>
           <div class="proj-tags"><span class="proj-tag">React</span><span class="proj-tag">Django</span><span class="proj-tag">PostgreSQL</span></div>
+          <a href="https://github.com/abhinav09072002/Campus-Wave" target="_blank" class="proj-github-link">
+            <svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:currentColor;flex-shrink:0;"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            View on GitHub
+          </a>
         </div>
       </div>
     </div>
+
+    <div class="proj-more-wrap" id="proj-more">
+      <div class="projects-grid" style="margin-top:1rem;">
+        <div class="project-card">
+          <div class="project-thumb p2">📈</div>
+          <div class="project-body">
+            <h3>Predict-or</h3><div class="proj-year">2023 – Present</div>
+            <p>Stock price predictor using LSTM deep learning. Achieved 98.9% prediction accuracy with robust preprocessing.</p>
+            <div class="proj-tags"><span class="proj-tag">TensorFlow</span><span class="proj-tag">LSTM</span><span class="proj-tag">scikit-learn</span></div>
+            <a href="https://github.com/abhinav09072002/prediction-predictor" target="_blank" class="proj-github-link">
+              <svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:currentColor;flex-shrink:0;"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              View on GitHub
+            </a>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-thumb p1">₿</div>
+          <div class="project-body">
+            <h3>Know BTC</h3><div class="proj-year">2024</div>
+            <p>OHLC Bitcoin Market Analyzer using XGBoost &amp; Random Forest. Uncovered price patterns with interactive Plotly visualisations.</p>
+            <div class="proj-tags"><span class="proj-tag">Python</span><span class="proj-tag">XGBoost</span><span class="proj-tag">Plotly</span><span class="proj-tag">Pandas</span></div>
+            <a href="https://github.com/abhinav09072002/OHLCQuantify" target="_blank" class="proj-github-link">
+              <svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:currentColor;flex-shrink:0;"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              View on GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:center;margin-top:1.2rem;">
+      <button class="proj-sq-btn" id="proj-sq-btn" onclick="toggleProjMore()" aria-label="Toggle more projects">
+        <svg class="proj-sq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </button>
     </div>
   </div>
 
@@ -712,31 +1113,103 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
     <p class="card-sub" style="text-align:center;">Readings that shape my worldview</p>
     <button class="section-toggle" onclick="toggleSection(this,'books-body')">Hide ↑</button>
     <div id="books-body" class="section-body">
-    <div class="books-filter">
-      <button class="book-filter-btn active" onclick="filterBooks(this,'all')">All (17)</button>
-      <button class="book-filter-btn" onclick="filterBooks(this,'ai')">AI &amp; Engineering (4)</button>
-      <button class="book-filter-btn" onclick="filterBooks(this,'sys')">Software Systems (3)</button>
-      <button class="book-filter-btn" onclick="filterBooks(this,'phil')">Philosophy (2)</button>
-      <button class="book-filter-btn" onclick="filterBooks(this,'biz')">Business (2)</button>
-      <button class="book-filter-btn" onclick="filterBooks(this,'fiction')">Fiction (2)</button>
-      <button class="book-filter-btn" onclick="filterBooks(this,'history')">History (2)</button>
+    <div class="books-categories">
+      <button class="book-cat-btn active" onclick="selectBookCat(this,'ai')">AI &amp; Engineering</button>
+      <button class="book-cat-btn" onclick="selectBookCat(this,'sys')">Software Systems</button>
+      <button class="book-cat-btn" onclick="selectBookCat(this,'phil')">Philosophy</button>
+      <button class="book-cat-btn" onclick="selectBookCat(this,'biz')">Business</button>
+      <button class="book-cat-btn" onclick="selectBookCat(this,'fiction')">Fiction</button>
+      <button class="book-cat-btn" onclick="selectBookCat(this,'history')">History</button>
     </div>
     <div class="books-grid" id="books-grid">
-      <div class="book-item" data-cat="ai"><div class="book-num">1</div><div><div class="book-title">Designing Machine Learning Systems</div><div class="book-author">Chip Huyen</div></div></div>
-      <div class="book-item" data-cat="ai"><div class="book-num">2</div><div><div class="book-title">The Alignment Problem</div><div class="book-author">Brian Christian</div></div></div>
-      <div class="book-item" data-cat="ai"><div class="book-num">3</div><div><div class="book-title">Deep Learning</div><div class="book-author">Goodfellow, Bengio &amp; Courville</div></div></div>
-      <div class="book-item" data-cat="ai"><div class="book-num">4</div><div><div class="book-title">AI: A Modern Approach</div><div class="book-author">Russell &amp; Norvig</div></div></div>
-      <div class="book-item" data-cat="sys"><div class="book-num">5</div><div><div class="book-title">Clean Code</div><div class="book-author">Robert C. Martin</div></div></div>
-      <div class="book-item" data-cat="sys"><div class="book-num">6</div><div><div class="book-title">Designing Data-Intensive Applications</div><div class="book-author">Martin Kleppmann</div></div></div>
-      <div class="book-item" data-cat="sys"><div class="book-num">7</div><div><div class="book-title">The Pragmatic Programmer</div><div class="book-author">Hunt &amp; Thomas</div></div></div>
-      <div class="book-item" data-cat="phil"><div class="book-num">8</div><div><div class="book-title">The Age of Surveillance Capitalism</div><div class="book-author">Shoshana Zuboff</div></div></div>
-      <div class="book-item" data-cat="phil"><div class="book-num">9</div><div><div class="book-title">Thinking, Fast and Slow</div><div class="book-author">Daniel Kahneman</div></div></div>
-      <div class="book-item" data-cat="biz"><div class="book-num">10</div><div><div class="book-title">Shoe Dog</div><div class="book-author">Phil Knight</div></div></div>
-      <div class="book-item" data-cat="biz"><div class="book-num">11</div><div><div class="book-title">Zero to One</div><div class="book-author">Peter Thiel</div></div></div>
-      <div class="book-item" data-cat="fiction"><div class="book-num">12</div><div><div class="book-title">Eleanor Oliphant is Completely Fine</div><div class="book-author">Gail Honeyman</div></div></div>
-      <div class="book-item" data-cat="fiction"><div class="book-num">13</div><div><div class="book-title">The Silent Patient</div><div class="book-author">Alex Michaelides</div></div></div>
-      <div class="book-item" data-cat="history"><div class="book-num">14</div><div><div class="book-title">KGB and the World</div><div class="book-author">Christopher Andrew &amp; Vasili Mitrokhin</div></div></div>
-      <div class="book-item" data-cat="history"><div class="book-num">15</div><div><div class="book-title">India After Independence</div><div class="book-author">Bipan Chandra</div></div></div>
+
+      <!-- AI & Engineering -->
+      <div class="book-item" data-cat="ai">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9781098107963-L.jpg" alt="Designing Machine Learning Systems" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">📘</div><div class="book-cover-placeholder-text">Designing Machine Learning Systems</div></div>
+        <div class="book-meta"><div class="book-title">Designing Machine Learning Systems</div><div class="book-author">Chip Huyen</div></div>
+      </div>
+      <div class="book-item" data-cat="ai">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/olid/OL39480353M-L.jpg" alt="The Alignment Problem" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">🤖</div><div class="book-cover-placeholder-text">The Alignment Problem</div></div>
+        <div class="book-meta"><div class="book-title">The Alignment Problem</div><div class="book-author">Brian Christian</div></div>
+      </div>
+      <div class="book-item" data-cat="ai">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780262035613-L.jpg" alt="Deep Learning" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">🧠</div><div class="book-cover-placeholder-text">Deep Learning</div></div>
+        <div class="book-meta"><div class="book-title">Deep Learning</div><div class="book-author">Goodfellow, Bengio &amp; Courville</div></div>
+      </div>
+      <div class="book-item" data-cat="ai">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780136042594-L.jpg" alt="AI: A Modern Approach" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">💡</div><div class="book-cover-placeholder-text">AI: A Modern Approach</div></div>
+        <div class="book-meta"><div class="book-title">AI: A Modern Approach</div><div class="book-author">Russell &amp; Norvig</div></div>
+      </div>
+
+      <!-- Software Systems -->
+      <div class="book-item" data-cat="sys" style="display:none">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780132350884-L.jpg" alt="Clean Code" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">🧹</div><div class="book-cover-placeholder-text">Clean Code</div></div>
+        <div class="book-meta"><div class="book-title">Clean Code</div><div class="book-author">Robert C. Martin</div></div>
+      </div>
+      <div class="book-item" data-cat="sys" style="display:none">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9781449373320-L.jpg" alt="Designing Data-Intensive Applications" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">🗄️</div><div class="book-cover-placeholder-text">Designing Data-Intensive Applications</div></div>
+        <div class="book-meta"><div class="book-title">Designing Data-Intensive Applications</div><div class="book-author">Martin Kleppmann</div></div>
+      </div>
+      <div class="book-item" data-cat="sys" style="display:none">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780135957059-L.jpg" alt="The Pragmatic Programmer" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">⚙️</div><div class="book-cover-placeholder-text">The Pragmatic Programmer</div></div>
+        <div class="book-meta"><div class="book-title">The Pragmatic Programmer</div><div class="book-author">Hunt &amp; Thomas</div></div>
+      </div>
+
+      <!-- Philosophy -->
+      <div class="book-item" data-cat="phil" style="display:none">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9781541758001-L.jpg" alt="The Age of Surveillance Capitalism" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">👁️</div><div class="book-cover-placeholder-text">The Age of Surveillance Capitalism</div></div>
+        <div class="book-meta"><div class="book-title">The Age of Surveillance Capitalism</div><div class="book-author">Shoshana Zuboff</div></div>
+      </div>
+      <div class="book-item" data-cat="phil" style="display:none">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780374533557-L.jpg" alt="Thinking, Fast and Slow" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">🧩</div><div class="book-cover-placeholder-text">Thinking, Fast and Slow</div></div>
+        <div class="book-meta"><div class="book-title">Thinking, Fast and Slow</div><div class="book-author">Daniel Kahneman</div></div>
+      </div>
+
+      <!-- Business -->
+      <div class="book-item" data-cat="biz" style="display:none">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9781501135910-L.jpg" alt="Shoe Dog" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">👟</div><div class="book-cover-placeholder-text">Shoe Dog</div></div>
+        <div class="book-meta"><div class="book-title">Shoe Dog</div><div class="book-author">Phil Knight</div></div>
+      </div>
+      <div class="book-item" data-cat="biz" style="display:none">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780804139021-L.jpg" alt="Zero to One" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">🚀</div><div class="book-cover-placeholder-text">Zero to One</div></div>
+        <div class="book-meta"><div class="book-title">Zero to One</div><div class="book-author">Peter Thiel</div></div>
+      </div>
+
+      <!-- Fiction -->
+      <div class="book-item" data-cat="fiction" style="display:none">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780008172145-L.jpg" alt="Eleanor Oliphant is Completely Fine" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">📖</div><div class="book-cover-placeholder-text">Eleanor Oliphant is Completely Fine</div></div>
+        <div class="book-meta"><div class="book-title">Eleanor Oliphant is Completely Fine</div><div class="book-author">Gail Honeyman</div></div>
+      </div>
+      <div class="book-item" data-cat="fiction" style="display:none">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9781250301697-L.jpg" alt="The Silent Patient" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">🔇</div><div class="book-cover-placeholder-text">The Silent Patient</div></div>
+        <div class="book-meta"><div class="book-title">The Silent Patient</div><div class="book-author">Alex Michaelides</div></div>
+      </div>
+
+      <!-- History -->
+      <div class="book-item" data-cat="history" style="display:none">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780713999068-L.jpg" alt="KGB and the World" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">🕵️</div><div class="book-cover-placeholder-text">KGB and the World</div></div>
+        <div class="book-meta"><div class="book-title">KGB and the World</div><div class="book-author">Christopher Andrew &amp; Vasili Mitrokhin</div></div>
+      </div>
+      <div class="book-item" data-cat="history" style="display:none">
+        <img class="book-cover" src="https://covers.openlibrary.org/b/olid/OL169302M-L.jpg" alt="India After Independence" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">🇮🇳</div><div class="book-cover-placeholder-text">India After Independence</div></div>
+        <div class="book-meta"><div class="book-title">India After Independence</div><div class="book-author">Bipan Chandra</div></div>
+      </div>
+
     </div>
     </div>
   </div>
@@ -744,23 +1217,32 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
   <!-- ACHIEVEMENTS -->
   <div class="card" id="achievements">
     <div class="card-title">Achievements.</div>
-    <button class="section-toggle" onclick="toggleSection(this,'achievements-body')">Hide ↑</button>
-    <div id="achievements-body" class="section-body">
     <div class="ach-list">
       <div class="ach-item"><span class="ach-icon">🏅</span><div><div class="ach-title">NTSE Qualifier</div><div class="ach-desc">Selected among top-performing students nationwide in Stage I of the National Talent Search Examination (Govt. of India).</div></div></div>
-      <div class="ach-item"><span class="ach-icon">🎭</span><div><div class="ach-title">Street Play – 1st Place</div><div class="ach-desc">1st at Jain University & BITS Pilani Goa (Oasis Fest) — teamwork, creativity, public communication.</div></div></div>
-      <div class="ach-item"><span class="ach-icon">🎬</span><div><div class="ach-title">CARV Hindi Theatre</div><div class="ach-desc">Writer and actor in multiple theatre productions across Bangalore and national-level events.</div></div></div>
-      <div class="ach-item"><span class="ach-icon">📚</span><div><div class="ach-title">Teaching Assistant – UPAY NGO</div><div class="ach-desc">Mentored underprivileged students in Mathematics and English through structured sessions.</div></div></div>
-      <div class="ach-item"><span class="ach-icon">💻</span><div><div class="ach-title">Competitive Programming</div><div class="ach-desc">400+ DSA problems on GeeksforGeeks. Multiple verified skill badges on HackerRank.</div></div></div>
+      <div class="ach-item"><span class="ach-icon">🎭</span><div><div class="ach-title">Street Play – 1st Place</div><div class="ach-desc">1st at Jain University &amp; BITS Pilani Goa (Oasis Fest) — teamwork, creativity, public communication.</div></div></div>
     </div>
+    <div class="ach-more-wrap" id="ach-more">
+      <div class="ach-list" style="margin-top:0.65rem;">
+        <div class="ach-item"><span class="ach-icon">🎬</span><div><div class="ach-title">CARV Hindi Theatre</div><div class="ach-desc">Writer and actor in multiple theatre productions across Bangalore and national-level events.</div></div></div>
+        <div class="ach-item"><span class="ach-icon">📚</span><div><div class="ach-title">Teaching Assistant – UPAY NGO</div><div class="ach-desc">Mentored underprivileged students in Mathematics and English through structured sessions.</div></div></div>
+        <div class="ach-item"><span class="ach-icon">💻</span><div><div class="ach-title">Competitive Programming</div><div class="ach-desc">400+ DSA problems on GeeksforGeeks. Multiple verified skill badges on HackerRank.</div></div></div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:center;margin-top:1.1rem;">
+      <button class="ach-chevron-btn" id="ach-chevron-btn" onclick="toggleAchMore()" aria-label="Toggle more achievements">
+        <span class="ach-chevron-track">
+          <span class="ach-chevron-dot"></span>
+          <svg class="ach-chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </span>
+      </button>
     </div>
   </div>
 
   <!-- CERTIFICATIONS -->
   <div class="card" id="certifications">
     <div class="card-title">Certifications.</div>
-    <button class="section-toggle" onclick="toggleSection(this,'certifications-body')">Hide ↑</button>
-    <div id="certifications-body" class="section-body">
+    <button class="section-toggle" onclick="toggleSection(this,'certifications-body')">Show ↓</button>
+    <div id="certifications-body" class="section-body collapsed">
     <div class="cert-list">
       <div class="cert-item">
         <img class="cert-logo" src="data:image/png;base64,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nj2mrY0psxAm5Wgw/aatw+ERQboA47ovrfXiqnOdmLWASO7v9hUfMKLoH5hrsWnYPduzpUm0avtdvCj1KES6SmQo+GT0tDJq1NK86FqmHbTFHDdeWkdrQtI2Z05q7TOlnYGstRfDc5clTjbnfLe7psgAI7xwBSuQTyOM4FbvSlOAWFlmqmodUyulfa5zyFh4JVadWbLbw3udPRI19Fn2995SktyrlJSlSScjLQQUJ/ijIHlVlqV45gdqpmGYtPhri+EC55gHTlyVT2ezDq8/57UFiR/F71X/AGivm/2Y9bJA7i+aec9vW48n+5s1bSlI6Jquhtti177w80KoLnZq3CSeJunV/wAWW7+lqvn/AIN24n+vsP8A94v9nVwqV50LU5/HOK82+H7qvWxmxl+0prljUupJlvKYSF+jMxXVOFTi0lGVZSAAEqV7TnHhjmwtKU41oaLBZ/E8UqMTm6aoNza2WWSgndTbHdfUesLhOsmukMWeT091EcuEiOGkhIBR0NpKSM558TnmtDj9mLWZA7+/WBv29Cnlf3oFWypSeiaTdWtNtZiFLEIot0AADqjhzVT3ezDq8Z7rUFiV7OrvU5/qmuovsz7gJHFy00v5pTw/vZq3dK86FqkN23xYauB/1Cp8rs27iA8SLAfmlufs65x+zXuAt5CHZlgZQT6y/SnFdI9uA3zVvqV50LUv+OcV5t8P3WG0RYGNLaRtenoznetwIyWe8KenvFAesrHlk5OPfWZpSngLLIySOleXvNyTc95SlKUJCUpShCUpShCUpShCUpShCUpShCUpShCUpShCUpShCUpShCUpShCUpShCUpShCUpShCUpShCUpShCUpShCUpShCUpShCUpShCUpShCUpShCUpShCUpShCUpShCUpShCUpShCUpShCUpShCUpShCUpShCUpShCUpShCUpShC//2Q==" alt="NPTEL" />
@@ -899,8 +1381,8 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
   <div class="card" id="github">
     <div class="card-title" style="text-align:center;">My GitHub Activity.</div>
     <p class="card-sub" style="text-align:center;">Here's my contribution graph showing my coding activity over the past year.</p>
-    <button class="section-toggle" onclick="toggleSection(this,'github-body')" style="display:block;margin:0 auto 1.4rem;">Hide ↑</button>
-    <div id="github-body" class="section-body">
+    <button class="section-toggle" onclick="toggleSection(this,'github-body')" style="display:block;margin:0 auto 1.4rem;">Show ↓</button>
+    <div id="github-body" class="section-body collapsed">
       <div class="github-contrib-wrap">
         <div class="contrib-legend">
           <span style="font-size:0.72rem;color:var(--muted);">Less</span>
@@ -944,12 +1426,17 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
     <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
   </a>
   <!-- Email icon -->
-  <a class="nav-icon" href="https://mail.google.com/mail/?view=cm&fs=1&to=akv09072002@gmail.com" target="_blank" title="Email">
+  <button class="nav-icon" onclick="toggleMailPicker(event)" title="Email" style="border:none;background:transparent;cursor:pointer;">
     <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
-  </a>
+  </button>
   <div class="nav-sep"></div>
   <a class="nav-icon" href="#projects" title="Projects">
     <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+  </a>
+  <!-- Fish icon -->
+   <a class="nav-icon" onclick="toggleFish()" title="Fish Mode">
+  <svg viewBox="0 0 24 24"><path d="M2 12s4-6 10-6c4 0 8 3 10 6-2 3-6 6-10 6-6 0-10-6-10-6zm10 0a2 2 0 100 4 2 2 0 000-4z"/>
+  </svg>
   </a>
   <div class="nav-sep"></div>
   <!-- Resume Download -->
@@ -967,8 +1454,107 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
     </span>
   </button>
 </nav>
+<!-- MAIL PICKER POPUP -->
+<div id="mail-picker" class="mail-picker" role="dialog" aria-label="Choose email client">
+  <div class="mail-picker-label">Send me a message via</div>
+  <div class="mail-picker-email">
+    <svg viewBox="0 0 24 24" style="width:13px;height:13px;flex-shrink:0;fill:var(--accent)"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+    <span style="flex:1;">akv09072002@gmail.com</span>
+    <button class="mail-copy-btn" onclick="copyEmail(this)" title="Copy email">
+      <svg class="mail-copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      <svg class="mail-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:none"><polyline points="20 6 9 17 4 12"/></svg>
+    </button>
+  </div>
+  <a class="mail-option" href="https://mail.google.com/mail/?view=cm&fs=1&to=akv09072002@gmail.com&su=Hello%20Abhinav%20%E2%80%94%20Portfolio%20Enquiry" target="_blank" onclick="closeMailPicker()">
+    <svg class="mail-option-icon" viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z" fill="#EA4335"/></svg>
+    <span class="mail-option-name">Gmail</span>
+    <svg class="mail-option-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </a>
+  <a class="mail-option" href="https://outlook.live.com/mail/0/deeplink/compose?to=akv09072002@gmail.com&subject=Hello%20Abhinav%20%E2%80%94%20Portfolio%20Enquiry" target="_blank" onclick="closeMailPicker()">
+    <svg class="mail-option-icon" viewBox="0 0 24 24"><path d="M24 7.387v10.478L18.09 14l-4.59 3.272V24l10.5-6V7.387zM13.5 0L0 3.75v16.5L13.5 24V0zM9 15.75c-2.25 0-3.75-1.875-3.75-3.75S6.75 8.25 9 8.25s3.75 1.875 3.75 3.75S11.25 15.75 9 15.75zm10.5-7.5h-4.5V5.25l9 2.25-4.5.75z" fill="#0078D4"/></svg>
+    <span class="mail-option-name">Outlook</span>
+    <svg class="mail-option-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </a>
+  <a class="mail-option" href="https://yahoo.com/mail/compose/?to=akv09072002@gmail.com&subject=Hello%20Abhinav%20%E2%80%94%20Portfolio%20Enquiry" target="_blank" onclick="closeMailPicker()">
+    <svg class="mail-option-icon" viewBox="0 0 24 24"><path d="M13.478 11.02L9.542 3H5.01l5.902 11.897v5.985h3.376v-5.985L20.99 3h-4.442z" fill="#6001D2"/></svg>
+    <span class="mail-option-name">Yahoo Mail</span>
+    <svg class="mail-option-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </a>
+  <a class="mail-option" href="mailto:akv09072002@gmail.com?subject=Hello%20Abhinav%20%E2%80%94%20Portfolio%20Enquiry" onclick="closeMailPicker()">
+    <svg class="mail-option-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+    <span class="mail-option-name">Default Mail App</span>
+    <svg class="mail-option-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </a>
+</div>
+<div id="mail-backdrop" class="mail-backdrop" onclick="closeMailPicker()"></div>
+
+<div id="fish-container"></div>
 
 <script>
+function copyEmail(btn) {
+  navigator.clipboard.writeText('akv09072002@gmail.com').then(() => {
+    btn.classList.add('copied');
+    btn.querySelector('.mail-copy-icon').style.display = 'none';
+    btn.querySelector('.mail-check-icon').style.display = 'block';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.querySelector('.mail-copy-icon').style.display = 'block';
+      btn.querySelector('.mail-check-icon').style.display = 'none';
+    }, 2000);
+  });
+}
+function toggleMailPicker(e) {
+  e.stopPropagation();
+  const picker = document.getElementById('mail-picker');
+  const backdrop = document.getElementById('mail-backdrop');
+  const isOpen = picker.classList.contains('open');
+  if (isOpen) {
+    closeMailPicker();
+  } else {
+    picker.style.display = 'flex';
+    backdrop.style.display = 'block';
+    requestAnimationFrame(() => picker.classList.add('open'));
+  }
+}
+function closeMailPicker() {
+  const picker = document.getElementById('mail-picker');
+  const backdrop = document.getElementById('mail-backdrop');
+  picker.classList.remove('open');
+  backdrop.style.display = 'none';
+  setTimeout(() => { if (!picker.classList.contains('open')) picker.style.display = 'none'; }, 230);
+}
+function toggleProjMore() {
+  const wrap = document.getElementById('proj-more');
+  const btn = document.getElementById('proj-sq-btn');
+  const isOpen = wrap.classList.contains('open');
+  wrap.classList.toggle('open', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+  if (isOpen) {
+    setTimeout(() => {
+      document.getElementById('proj-sq-btn').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 560);
+  }
+}
+function toggleAchMore() {
+  const wrap = document.getElementById('ach-more');
+  const btn = document.getElementById('ach-chevron-btn');
+  const isOpen = wrap.classList.contains('open');
+  wrap.classList.toggle('open', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+}
+function toggleTechExtra() {
+  const extra = document.getElementById('tech-extra');
+  const icon = document.getElementById('tech-btn-icon');
+  const isExpanded = extra.classList.contains('expanded');
+  extra.classList.toggle('expanded', !isExpanded);
+  icon.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
+  // Scroll button into view smoothly after collapsing so user lands back at the button
+  if (isExpanded) {
+    setTimeout(() => {
+      document.getElementById('tech-show-btn').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 500);
+  }
+}
 function toggleTheme() {
   const html = document.documentElement;
   const isDark = html.getAttribute('data-theme') === 'dark';
@@ -997,11 +1583,18 @@ function toggleWork(item, id) {
   document.querySelectorAll('.work-item').forEach(i => i.classList.remove('expanded'));
   if (!isOpen) { detail.classList.add('open'); item.classList.add('expanded'); }
 }
-function filterBooks(btn, cat) {
-  document.querySelectorAll('.book-filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+function selectBookCat(btn, cat) {
+  btn.classList.toggle('active');
+  const allBtns = Array.from(document.querySelectorAll('.book-cat-btn'));
+  const activeCats = allBtns.filter(b => b.classList.contains('active')).map(b => b.getAttribute('onclick').match(/'([^']+)'/)[1]);
+  // if nothing selected, reactivate all → show all
+  if (activeCats.length === 0) {
+    allBtns.forEach(b => b.classList.add('active'));
+    document.querySelectorAll('#books-grid .book-item').forEach(item => item.style.display = '');
+    return;
+  }
   document.querySelectorAll('#books-grid .book-item').forEach(item => {
-    item.style.display = (cat === 'all' || item.dataset.cat === cat) ? 'flex' : 'none';
+    item.style.display = activeCats.includes(item.dataset.cat) ? '' : 'none';
   });
 }
 const navLinks = document.querySelectorAll('.bottom-nav .nav-icon[href^="#"]');
@@ -1024,6 +1617,110 @@ window.addEventListener('load', () => {
     L.marker([lat,lng],{icon}).addTo(map).bindPopup(`<strong style="font-size:0.8rem">${n}</strong><br/><span style="font-size:0.72rem;color:#6b6560">${d}</span>`);
   });
 });
+</script>
+<script>
+let fishTimeout;
+let spawnInterval;
+
+function toggleFish() {
+  const container = document.getElementById("fish-container");
+
+  clearTimeout(fishTimeout);
+  clearInterval(spawnInterval);
+  container.innerHTML = "";
+
+  // 💥 smooth staggered burst (FIXED)
+  for (let i = 0; i < 50; i++) {
+    setTimeout(() => createFish(container), i * 80);
+  }
+
+  // 🫧 bubbles
+  for (let i = 0; i < 25; i++) {
+    setTimeout(() => createBubble(container), i * 120);
+  }
+
+  // 🌊 continuous waves (slower + smoother)
+  spawnInterval = setInterval(() => {
+    for (let i = 0; i < 10; i++) {
+      setTimeout(() => createFish(container), i * 60);
+    }
+  }, 600); // slower interval
+
+  // ⏱ stop after 12 sec
+  fishTimeout = setTimeout(() => {
+    clearInterval(spawnInterval);
+    container.innerHTML = "";
+  }, 12000);
+}
+
+function createFish(container) {
+  const fish = document.createElement("div");
+  fish.className = "fish";
+
+  const fishes = ["🐟","🐠","🐡"];
+  fish.innerText = fishes[Math.floor(Math.random() * fishes.length)];
+
+  const direction = Math.floor(Math.random() * 4);
+  const duration = 9 + Math.random() * 4; // better variation
+
+  // 🎨 color
+  fish.style.filter = `hue-rotate(${Math.random()*360}deg)`;
+
+  // ✨ smoother easing (FIXED)
+  const easing = "cubic-bezier(0.4, 0, 0.2, 1)";
+
+  if (direction === 0) {
+    fish.style.top = Math.random() * 100 + "vh";
+    fish.style.left = "-60px";
+    fish.style.animation = `swimLR ${duration}s ${easing}`;
+  } 
+  else if (direction === 1) {
+    fish.style.top = Math.random() * 100 + "vh";
+    fish.style.left = "100vw";
+    fish.style.animation = `swimRL ${duration}s ${easing}`;
+    fish.style.transform = "scaleX(-1)";
+  } 
+  else if (direction === 2) {
+    fish.style.left = Math.random() * 100 + "vw";
+    fish.style.top = "-60px";
+    fish.style.animation = `swimTB ${duration}s ${easing}`;
+  }
+  else {
+    fish.style.left = Math.random() * 100 + "vw";
+    fish.style.top = "100vh";
+    fish.style.animation = `swimBT ${duration}s ${easing}`;
+  }
+
+  // ✨ small randomness (natural feel)
+  fish.style.opacity = 0.6 + Math.random() * 0.4;
+  fish.style.rotate = `${Math.random()*10 - 5}deg`;
+
+  container.appendChild(fish);
+
+  setTimeout(() => fish.remove(), duration * 1000);
+}
+</script>s
+<script>
+function createBubble(container) {
+  const bubble = document.createElement("div");
+  bubble.className = "bubble";
+
+  // random position
+  bubble.style.left = Math.random() * 100 + "vw";
+
+  // random size
+  const size = 4 + Math.random() * 10;
+  bubble.style.width = size + "px";
+  bubble.style.height = size + "px";
+
+  // random duration
+  const duration = 3 + Math.random() * 4;
+  bubble.style.animationDuration = duration + "s";
+
+  container.appendChild(bubble);
+
+  setTimeout(() => bubble.remove(), duration * 1000);
+}
 </script>
 </body>
 </html>
