@@ -236,6 +236,12 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
 }
 .tech-icon:hover { transform: scale(1.15); }
 .tech-icon img { width: 38px; height: 38px; object-fit: contain; filter: grayscale(10%); }
+@keyframes techFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+.tech-icon-aws-float { animation: techFloat 2.8s ease-in-out infinite; }
+.tech-icon-aws-float:hover { transform: scale(1.15); animation: none; }
 .tech-icon-label { font-size: 0.58rem; color: var(--muted); text-align: center; font-weight: 500; white-space: nowrap; }
 .tech-section-label {
   font-size: 0.72rem; font-weight: 600; color: var(--muted); text-transform: uppercase;
