@@ -490,107 +490,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
 
 .footer-text { text-align: center; font-size: 0.74rem; color: var(--muted); padding: 1rem 0 3rem; }
 
-/* ── CHATBOT ─────────────────────────────────────── */
-.chat-intro {
-  display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.4rem;
-}
-.chat-intro-avatar {
-  width: 42px; height: 42px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), #5bb8a8);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.1rem; flex-shrink: 0; border: 2px solid var(--border);
-}
-.chat-intro-text { font-size: 0.82rem; color: var(--muted); line-height: 1.55; }
-.chat-intro-text strong { color: var(--text); font-weight: 600; }
 
-.chat-messages {
-  display: flex; flex-direction: column; gap: 0.75rem;
-  max-height: 340px; overflow-y: auto; margin-bottom: 1rem;
-  padding-right: 0.25rem;
-  scrollbar-width: thin; scrollbar-color: var(--border) transparent;
-}
-.chat-messages::-webkit-scrollbar { width: 4px; }
-.chat-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-
-.chat-bubble {
-  display: flex; gap: 0.6rem; align-items: flex-end;
-  animation: bubbleIn 0.28s cubic-bezier(0.34,1.56,0.64,1);
-}
-@keyframes bubbleIn {
-  from { opacity: 0; transform: translateY(8px) scale(0.97); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
-}
-.chat-bubble.user { flex-direction: row-reverse; }
-.chat-bubble-avatar {
-  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
-  background: linear-gradient(135deg, var(--accent), #5bb8a8);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.7rem; border: 1.5px solid var(--border);
-}
-.chat-bubble.user .chat-bubble-avatar {
-  background: var(--card2); color: var(--muted); font-size: 0.8rem;
-}
-.chat-bubble-text {
-  max-width: 78%; padding: 0.6rem 0.9rem; border-radius: 14px;
-  font-size: 0.83rem; line-height: 1.6; border: 1px solid var(--border);
-  background: var(--card2); color: var(--text);
-}
-.chat-bubble.user .chat-bubble-text {
-  background: var(--accent); color: white; border-color: var(--accent);
-  border-bottom-right-radius: 4px;
-}
-.chat-bubble.bot .chat-bubble-text {
-  border-bottom-left-radius: 4px;
-}
-
-.chat-typing {
-  display: flex; align-items: center; gap: 4px; padding: 0.6rem 0.9rem;
-  background: var(--card2); border: 1px solid var(--border);
-  border-radius: 14px; border-bottom-left-radius: 4px;
-  width: fit-content;
-}
-.chat-typing span {
-  width: 6px; height: 6px; border-radius: 50%; background: var(--muted);
-  animation: typingDot 1.2s ease-in-out infinite;
-}
-.chat-typing span:nth-child(2) { animation-delay: 0.2s; }
-.chat-typing span:nth-child(3) { animation-delay: 0.4s; }
-@keyframes typingDot {
-  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
-  30% { transform: translateY(-5px); opacity: 1; }
-}
-
-.chat-suggestions {
-  display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 1rem;
-}
-.chat-suggestion-btn {
-  font-size: 0.75rem; padding: 0.35rem 0.8rem; border-radius: 999px;
-  border: 1.5px solid var(--border); background: var(--card); color: var(--muted);
-  cursor: pointer; font-family: var(--font); transition: all 0.15s; font-weight: 500;
-  white-space: nowrap;
-}
-.chat-suggestion-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--tag-bg); }
-
-.chat-input-row {
-  display: flex; gap: 0.6rem; align-items: center;
-}
-.chat-input {
-  flex: 1; padding: 0.65rem 1rem; border-radius: 999px;
-  border: 1.5px solid var(--border); background: var(--card2);
-  font-family: var(--font); font-size: 0.83rem; color: var(--text);
-  outline: none; transition: border-color 0.15s, background 0.3s;
-}
-.chat-input:focus { border-color: var(--accent); background: var(--card); }
-.chat-input::placeholder { color: var(--muted); }
-.chat-send-btn {
-  width: 38px; height: 38px; border-radius: 50%; border: none;
-  background: var(--accent); color: white; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.15s; flex-shrink: 0;
-}
-.chat-send-btn:hover { background: #1f6b5e; transform: scale(1.07); }
-.chat-send-btn:disabled { background: var(--border); transform: none; cursor: default; }
-.chat-send-btn svg { width: 15px; height: 15px; fill: white; }
 
 /* ── RESPONSIVE ──────────────────────────────────── */
 @media (max-width: 768px) {
@@ -944,7 +844,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
 #sp-playing.sp-fade { opacity: 0; }
 
 .sp-art-wrap { position: relative; flex-shrink: 0; width: 110px; }
-.sp-art-img { width: 110px; height: 110px; object-fit: cover; display: block; transition: filter 0.4s ease; }
+.sp-art-img { width: 110px; height: 110px; object-fit: cover; display: block; transition: filter 0.4s ease; border-radius: 10px; }
 .sp-art-overlay {
   position: absolute; inset: 0;
   background: linear-gradient(to right, transparent 60%, var(--card) 100%); pointer-events: none;
@@ -1052,40 +952,6 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
     </div>
   </div>
 
-  <!-- CHATBOT -->
-  <div class="card" id="ask">
-    <div class="card-title">Ask Me Anything.</div>
-    <div class="card-sub">Powered by my actual work, projects & experience — not a generic bot.</div>
-
-    <div class="chat-intro">
-      <div class="chat-intro-avatar">🤖</div>
-      <div class="chat-intro-text">
-        <strong>Hey! I'm Abhinav's AI twin.</strong><br>
-        Ask me about his projects, skills, experience, or anything on this page.
-      </div>
-    </div>
-
-    <div class="chat-messages" id="chat-messages">
-      <div class="chat-bubble bot">
-        <div class="chat-bubble-avatar">🤖</div>
-        <div class="chat-bubble-text">Hi! I know everything about Abhinav — his work, projects, skills, and hobbies. What would you like to know? 👋</div>
-      </div>
-    </div>
-
-    <div class="chat-suggestions" id="chat-suggestions">
-      <button class="chat-suggestion-btn" onclick="chatSuggest(this)">What tech stack does he use?</button>
-      <button class="chat-suggestion-btn" onclick="chatSuggest(this)">Tell me about his AI projects</button>
-      <button class="chat-suggestion-btn" onclick="chatSuggest(this)">Is he open to work?</button>
-      <button class="chat-suggestion-btn" onclick="chatSuggest(this)">What makes him different?</button>
-    </div>
-
-    <div class="chat-input-row">
-      <input class="chat-input" id="chat-input" type="text" placeholder="Ask anything about Abhinav…" onkeydown="if(event.key==='Enter')sendChat()" autocomplete="off"/>
-      <button class="chat-send-btn" id="chat-send-btn" onclick="sendChat()">
-        <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-      </button>
-    </div>
-  </div>
 
   <!-- WORK -->
   <div class="card" id="work">
@@ -1888,9 +1754,6 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
   <a class="nav-icon" href="#about" title="About">
     <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
   </a>
-  <a class="nav-icon" href="#ask" title="Ask Me">
-    <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V6h2v4z"/></svg>
-  </a>
   <div class="nav-sep"></div>
   <!-- GitHub icon -->
   <a class="nav-icon" href="http://www.github.com/abhinav09072002" target="_blank" title="GitHub">
@@ -2062,63 +1925,8 @@ function flipBook(item) {
   item.classList.toggle('flipped');
 }
 
-/* ── CHATBOT ─────────────────────────────────────── */
-const ABHINAV_CONTEXT = `You are Abhinav Verma's personal AI assistant embedded on his portfolio website. You only answer questions about Abhinav. Be conversational, warm, and concise (2-4 sentences max). Use first-person perspective as if you are him ("I built...", "I work on..."). If asked something unrelated to Abhinav, politely redirect.
-
-About Abhinav Verma:
-- Software Engineer specialising in AI / Full-Stack, based in Bangalore, India
-- Originally from Lucknow, grew up in Kanpur, studied at RVCE Bangalore (EEE '24)
-- Currently building an AI-powered newsletter platform at Astilbe Page (React, Node.js, MongoDB; LLM routing with Mistral-7B, RBAC, email pipelines)
-- Previously at Tektronix: automated PCIe PLL bandwidth testing with Python + Selenium, replaced costly BERT hardware with software-driven solutions
-- Previously at Astilbe Page (Pune): compliance-focused agentic AI platform using RAG (OpenAI + Pinecone)
-- Tech stack: Python, JavaScript/TypeScript, React, Node.js, MongoDB, PostgreSQL, Redis, Docker, AWS, Mistral-7B, OpenAI API, Pinecone, LangChain, FastAPI
-- 400+ LeetCode problems solved
-- Does theatre: writes and performs street plays with CARV Hindi Theatre across Bangalore and national events
-- Mentors underprivileged students in mathematics
-- Open to interesting software/AI engineering roles
-- Strong in: LLM pipelines, RAG systems, agentic AI, API design, system design, full-stack development
-- Differentiators: combines deep AI/backend engineering with strong communication skills from theatre; cares about production reliability and observability
-- Travelled to: Bangalore, Pune, Lucknow, Kanpur, Austin TX (USA), Oita (Japan)`;
-
-async function sendChat() {
-  const input = document.getElementById('chat-input');
-  const msg = input.value.trim();
-  if (!msg) return;
-  input.value = '';
-  addBubble('user', msg);
-  document.getElementById('chat-suggestions').style.display = 'none';
-  showTyping();
-  document.getElementById('chat-send-btn').disabled = true;
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 300,
-        system: ABHINAV_CONTEXT,
-        messages: [{ role: 'user', content: msg }]
-      })
-    });
-    const data = await res.json();
-    removeTyping();
-    const reply = data.content?.[0]?.text || "Hmm, couldn't fetch a response right now. Try again!";
-    addBubble('bot', reply);
-  } catch (e) {
-    removeTyping();
-    addBubble('bot', "Sorry, something went wrong. Please try again.");
-  }
-  document.getElementById('chat-send-btn').disabled = false;
-}
-
-function chatSuggest(btn) {
-  document.getElementById('chat-input').value = btn.textContent;
-  sendChat();
-}
-
 // ── SPOTIFY NOW PLAYING ───────────────────────────────────────────────────────
 (function () {
-  /* ▶ CHANGE THIS to your deployed backend URL after deploy */
   var BACKEND = 'https://spotift.onrender.com/now-playing';
   var POLL_MS = 10000;
 
@@ -2147,14 +1955,17 @@ function chatSuggest(btn) {
   function fmt(ms) { var s=Math.floor(ms/1000); return Math.floor(s/60)+':'+(s%60<10?'0':'')+(s%60); }
 
   function showShimmer()  { $shimmer.style.display=''; $notPlaying.style.display='none'; $playing.style.display='none'; }
-  function showNotPlay()  { $shimmer.style.display='none'; $notPlaying.style.display=''; $playing.style.display='none'; }
+  function showNotPlay()  { $shimmer.style.display='none'; $notPlaying.style.display='flex'; $playing.style.display='none'; }
 
   function applyTrack(t) {
     $shimmer.style.display='none'; $notPlaying.style.display='none';
     $playing.style.display='flex'; $playing.classList.remove('sp-fade');
     $title.textContent=t.title; $artist.textContent=t.artist; $album.textContent=t.album;
     $dur.textContent=fmt(t.duration);
-    if (t.coverImage && $art.src!==t.coverImage) $art.src=t.coverImage;
+    if (t.coverImage && $art.getAttribute('data-src') !== t.coverImage) {
+      $art.setAttribute('data-src', t.coverImage);
+      $art.src = t.coverImage;
+    }
     cur=t; progressMs=t.progress; playing=t.isPlaying; lastPoll=Date.now();
     if (playing) {
       $badge.style.display='flex'; $pbadge.style.display='none';
@@ -2188,7 +1999,7 @@ function chatSuggest(btn) {
       if (!r.ok) throw new Error('HTTP '+r.status);
       var d = await r.json();
       usingFallback = false;
-      if (!d.isPlaying && !d.title) { showNotPlay(); cur=null; }
+      if (!d.isPlaying) { showNotPlay(); cur=null; }
       else renderTrack(d);
     } catch(e) {
       if (!usingFallback) {
@@ -2208,29 +2019,6 @@ function chatSuggest(btn) {
   setInterval(poll, POLL_MS);
   raf = requestAnimationFrame(tick);
 })();
-
-function addBubble(who, text) {
-  const msgs = document.getElementById('chat-messages');
-  const bubble = document.createElement('div');
-  bubble.className = 'chat-bubble ' + who;
-  bubble.innerHTML = '<div class="chat-bubble-avatar">' + (who === 'bot' ? '🤖' : '👤') + '</div><div class="chat-bubble-text">' + text + '</div>';
-  msgs.appendChild(bubble);
-  msgs.scrollTop = msgs.scrollHeight;
-}
-
-function showTyping() {
-  const msgs = document.getElementById('chat-messages');
-  const el = document.createElement('div');
-  el.className = 'chat-bubble bot'; el.id = 'chat-typing-bubble';
-  el.innerHTML = '<div class="chat-bubble-avatar">🤖</div><div class="chat-typing"><span></span><span></span><span></span></div>';
-  msgs.appendChild(el);
-  msgs.scrollTop = msgs.scrollHeight;
-}
-
-function removeTyping() {
-  const el = document.getElementById('chat-typing-bubble');
-  if (el) el.remove();
-}
 
 function selectBookCat(btn, cat) {
   btn.classList.toggle('active');
