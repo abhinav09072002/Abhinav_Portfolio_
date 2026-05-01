@@ -349,7 +349,56 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
 .proj-sq-btn:hover .proj-sq-chevron { color: var(--accent); }
 .proj-sq-btn.open .proj-sq-chevron { transform: rotate(180deg); }
 
-/* BOOKS */
+/* BOOKS - FLIP CARD */
+.book-item {
+  perspective: 800px;
+  cursor: pointer;
+}
+.book-flip-inner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2/3;
+  transform-style: preserve-3d;
+  transition: transform 0.42s cubic-bezier(0.4,0,0.2,1);
+  border-radius: 6px;
+}
+.book-item.flipped .book-flip-inner { transform: rotateY(180deg); }
+.book-flip-front, .book-flip-back {
+  position: absolute; inset: 0; border-radius: 6px;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  overflow: hidden;
+}
+.book-flip-front { background: var(--card2); }
+.book-flip-front img.book-cover {
+  width: 100%; height: 100%; object-fit: cover;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.13);
+  border-radius: 6px; display: block;
+}
+.book-flip-front .book-cover-placeholder {
+  width: 100%; height: 100%; border-radius: 6px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  background: linear-gradient(135deg, var(--tag-bg), var(--card2));
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 0.5rem; text-align: center; gap: 0.4rem;
+}
+.book-flip-back {
+  transform: rotateY(180deg);
+  background: var(--card);
+  border: 1px solid var(--accent);
+  box-shadow: 0 4px 18px rgba(42,125,111,0.18);
+  display: flex; flex-direction: column; justify-content: center;
+  align-items: center; padding: 0.7rem 0.6rem; text-align: center; gap: 0.5rem;
+}
+.book-back-emoji { font-size: 1.5rem; line-height: 1; }
+.book-back-title { font-size: 0.62rem; font-weight: 700; color: var(--text); line-height: 1.3; }
+.book-back-author { font-size: 0.56rem; color: var(--accent); font-weight: 600; }
+.book-back-summary { font-size: 0.58rem; color: var(--muted); line-height: 1.55; }
+.book-back-hint { font-size: 0.52rem; color: var(--border); margin-top: auto; font-style: italic; }
+.book-item:hover .book-flip-inner:not(.book-item.flipped .book-flip-inner) { transform: translateY(-3px); }
+.book-item.flipped:hover .book-flip-inner { transform: rotateY(180deg) translateY(-3px); }
+
 /* BOOK CATEGORIES */
 .books-categories { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-bottom: 1.6rem; justify-content: center; }
 .book-cat-btn {
@@ -364,25 +413,6 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
   gap: 1rem;
-}
-.book-item {
-  display: flex; flex-direction: column; align-items: center;
-  cursor: default; transition: transform 0.18s;
-}
-.book-item:hover { transform: translateY(-3px); }
-.book-cover {
-  width: 100%; aspect-ratio: 2/3; border-radius: 6px;
-  object-fit: cover; border: 1px solid var(--border);
-  box-shadow: 0 4px 14px rgba(0,0,0,0.13);
-  background: var(--card2); display: block;
-}
-.book-cover-placeholder {
-  width: 100%; aspect-ratio: 2/3; border-radius: 6px;
-  border: 1px solid var(--border);
-  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
-  background: linear-gradient(135deg, var(--tag-bg), var(--card2));
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 0.5rem; text-align: center; gap: 0.4rem;
 }
 .book-cover-placeholder-icon { font-size: 1.6rem; }
 .book-cover-placeholder-text { font-size: 0.6rem; color: var(--accent); font-weight: 600; line-height: 1.3; }
@@ -459,6 +489,108 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
 .contact-sub { font-size: 0.75rem; color: var(--muted); }
 
 .footer-text { text-align: center; font-size: 0.74rem; color: var(--muted); padding: 1rem 0 3rem; }
+
+/* ── CHATBOT ─────────────────────────────────────── */
+.chat-intro {
+  display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.4rem;
+}
+.chat-intro-avatar {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #5bb8a8);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; flex-shrink: 0; border: 2px solid var(--border);
+}
+.chat-intro-text { font-size: 0.82rem; color: var(--muted); line-height: 1.55; }
+.chat-intro-text strong { color: var(--text); font-weight: 600; }
+
+.chat-messages {
+  display: flex; flex-direction: column; gap: 0.75rem;
+  max-height: 340px; overflow-y: auto; margin-bottom: 1rem;
+  padding-right: 0.25rem;
+  scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+}
+.chat-messages::-webkit-scrollbar { width: 4px; }
+.chat-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.chat-bubble {
+  display: flex; gap: 0.6rem; align-items: flex-end;
+  animation: bubbleIn 0.28s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes bubbleIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.chat-bubble.user { flex-direction: row-reverse; }
+.chat-bubble-avatar {
+  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--accent), #5bb8a8);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem; border: 1.5px solid var(--border);
+}
+.chat-bubble.user .chat-bubble-avatar {
+  background: var(--card2); color: var(--muted); font-size: 0.8rem;
+}
+.chat-bubble-text {
+  max-width: 78%; padding: 0.6rem 0.9rem; border-radius: 14px;
+  font-size: 0.83rem; line-height: 1.6; border: 1px solid var(--border);
+  background: var(--card2); color: var(--text);
+}
+.chat-bubble.user .chat-bubble-text {
+  background: var(--accent); color: white; border-color: var(--accent);
+  border-bottom-right-radius: 4px;
+}
+.chat-bubble.bot .chat-bubble-text {
+  border-bottom-left-radius: 4px;
+}
+
+.chat-typing {
+  display: flex; align-items: center; gap: 4px; padding: 0.6rem 0.9rem;
+  background: var(--card2); border: 1px solid var(--border);
+  border-radius: 14px; border-bottom-left-radius: 4px;
+  width: fit-content;
+}
+.chat-typing span {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--muted);
+  animation: typingDot 1.2s ease-in-out infinite;
+}
+.chat-typing span:nth-child(2) { animation-delay: 0.2s; }
+.chat-typing span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typingDot {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-5px); opacity: 1; }
+}
+
+.chat-suggestions {
+  display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 1rem;
+}
+.chat-suggestion-btn {
+  font-size: 0.75rem; padding: 0.35rem 0.8rem; border-radius: 999px;
+  border: 1.5px solid var(--border); background: var(--card); color: var(--muted);
+  cursor: pointer; font-family: var(--font); transition: all 0.15s; font-weight: 500;
+  white-space: nowrap;
+}
+.chat-suggestion-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--tag-bg); }
+
+.chat-input-row {
+  display: flex; gap: 0.6rem; align-items: center;
+}
+.chat-input {
+  flex: 1; padding: 0.65rem 1rem; border-radius: 999px;
+  border: 1.5px solid var(--border); background: var(--card2);
+  font-family: var(--font); font-size: 0.83rem; color: var(--text);
+  outline: none; transition: border-color 0.15s, background 0.3s;
+}
+.chat-input:focus { border-color: var(--accent); background: var(--card); }
+.chat-input::placeholder { color: var(--muted); }
+.chat-send-btn {
+  width: 38px; height: 38px; border-radius: 50%; border: none;
+  background: var(--accent); color: white; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s; flex-shrink: 0;
+}
+.chat-send-btn:hover { background: #1f6b5e; transform: scale(1.07); }
+.chat-send-btn:disabled { background: var(--border); transform: none; cursor: default; }
+.chat-send-btn svg { width: 15px; height: 15px; fill: white; }
 
 /* ── RESPONSIVE ──────────────────────────────────── */
 @media (max-width: 768px) {
@@ -770,6 +902,88 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
   transition: opacity 0.15s, transform 0.15s; flex-shrink: 0;
 }
 
+/* ── SPOTIFY NOW PLAYING ─────────────────────────────────────── */
+#sp-card {
+  padding: 0 !important;
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s, background 0.3s;
+  user-select: none;
+}
+#sp-card:hover { border-color: var(--accent) !important; box-shadow: 0 4px 24px rgba(42,125,111,0.13); transform: translateY(-2px); }
+
+/* shimmer */
+.sp-shimmer-wrap { display: flex; align-items: center; gap: 1.2rem; padding: 1.5rem 1.8rem; }
+.sp-shimmer-art {
+  width: 72px; height: 72px; border-radius: 10px; flex-shrink: 0;
+  background: linear-gradient(90deg, var(--border) 25%, var(--card2) 50%, var(--border) 75%);
+  background-size: 200% 100%; animation: sp-shimmer 1.4s ease infinite;
+}
+.sp-shimmer-lines { flex: 1; display: flex; flex-direction: column; gap: 0.5rem; }
+.sp-shimmer-line {
+  height: 12px; border-radius: 6px;
+  background: linear-gradient(90deg, var(--border) 25%, var(--card2) 50%, var(--border) 75%);
+  background-size: 200% 100%; animation: sp-shimmer 1.4s ease infinite;
+}
+.sp-shimmer-line.sp-thin { height: 9px; }
+.sp-w70 { width: 70%; } .sp-w50 { width: 50%; animation-delay:.15s; } .sp-w85 { width: 85%; animation-delay:.3s; }
+@keyframes sp-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+/* not playing */
+.sp-not-wrap { display: flex; align-items: center; gap: 1rem; padding: 1.4rem 1.8rem; }
+.sp-not-icon {
+  width: 48px; height: 48px; border-radius: 50%; background: var(--tag-bg);
+  display: flex; align-items: center; justify-content: center; color: var(--muted); flex-shrink: 0;
+}
+.sp-not-icon svg { width: 24px; height: 24px; }
+.sp-not-label { display: block; font-size: 0.9rem; font-weight: 600; color: var(--text); }
+.sp-not-sub { display: block; font-size: 0.73rem; color: var(--muted); margin-top: 0.1rem; }
+
+/* playing layout */
+#sp-playing { display: flex; transition: opacity 0.4s ease; }
+#sp-playing.sp-fade { opacity: 0; }
+
+.sp-art-wrap { position: relative; flex-shrink: 0; width: 110px; }
+.sp-art-img { width: 110px; height: 110px; object-fit: cover; display: block; transition: filter 0.4s ease; }
+.sp-art-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, transparent 60%, var(--card) 100%); pointer-events: none;
+}
+.sp-bars { position: absolute; bottom: 8px; left: 8px; display: flex; align-items: flex-end; gap: 2px; height: 18px; }
+.sp-bars span { display: block; width: 3px; border-radius: 2px; background: var(--accent); opacity: 0.85; animation: sp-bar 0.9s ease-in-out infinite alternate; }
+.sp-bars span:nth-child(1) { height: 8px;  animation-delay: 0s;    animation-duration: 0.8s; }
+.sp-bars span:nth-child(2) { height: 14px; animation-delay: 0.15s; animation-duration: 0.6s; }
+.sp-bars span:nth-child(3) { height: 10px; animation-delay: 0.3s;  animation-duration: 0.75s; }
+.sp-bars span:nth-child(4) { height: 16px; animation-delay: 0.1s;  animation-duration: 0.65s; }
+.sp-bars span:nth-child(5) { height: 7px;  animation-delay: 0.45s; animation-duration: 0.9s; }
+@keyframes sp-bar { from { transform: scaleY(0.3); } to { transform: scaleY(1); } }
+.sp-bars.sp-paused span { animation-play-state: paused; }
+
+.sp-info { flex: 1; padding: 0.9rem 1.2rem 0.9rem 0.5rem; display: flex; flex-direction: column; gap: 0.2rem; min-width: 0; }
+.sp-top-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem; }
+.sp-logo { width: 16px; height: 16px; color: #1DB954; flex-shrink: 0; }
+.sp-badge { font-size: 0.63rem; font-weight: 700; letter-spacing: 0.05em; padding: 0.18rem 0.55rem; border-radius: 999px; }
+.sp-playing-badge { background: rgba(29,185,84,0.13); color: #1DB954; display: flex; align-items: center; gap: 0.3rem; }
+.sp-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #1DB954; display: inline-block; animation: sp-pulse 1.2s ease infinite; }
+@keyframes sp-pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.4; transform:scale(0.7); } }
+.sp-paused-badge { background: var(--tag-bg); color: var(--muted); }
+
+.sp-track-title { font-size: 0.95rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text); }
+.sp-track-artist { font-size: 0.78rem; color: var(--accent); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sp-track-album { font-size: 0.72rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 0.2rem; }
+
+.sp-progress-wrap { margin-top: auto; }
+.sp-progress-bar { height: 3px; border-radius: 99px; background: var(--border); overflow: hidden; margin-bottom: 0.3rem; }
+.sp-progress-fill { height: 100%; border-radius: 99px; background: linear-gradient(to right, var(--accent), #1DB954); transition: width 1s linear; }
+.sp-progress-times { display: flex; justify-content: space-between; font-size: 0.65rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+@media (max-width: 480px) {
+  .sp-art-wrap { width: 80px; }
+  .sp-art-img { width: 80px; height: 80px; }
+  .sp-info { padding: 0.75rem 0.9rem 0.75rem 0.35rem; }
+  .sp-track-title { font-size: 0.85rem; }
+}
+
 </style>
 </head>
 <body>
@@ -835,6 +1049,41 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
         <span class="about-status-chip">🎓 RVCE EEE '24</span>
       </div>
 
+    </div>
+  </div>
+
+  <!-- CHATBOT -->
+  <div class="card" id="ask">
+    <div class="card-title">Ask Me Anything.</div>
+    <div class="card-sub">Powered by my actual work, projects & experience — not a generic bot.</div>
+
+    <div class="chat-intro">
+      <div class="chat-intro-avatar">🤖</div>
+      <div class="chat-intro-text">
+        <strong>Hey! I'm Abhinav's AI twin.</strong><br>
+        Ask me about his projects, skills, experience, or anything on this page.
+      </div>
+    </div>
+
+    <div class="chat-messages" id="chat-messages">
+      <div class="chat-bubble bot">
+        <div class="chat-bubble-avatar">🤖</div>
+        <div class="chat-bubble-text">Hi! I know everything about Abhinav — his work, projects, skills, and hobbies. What would you like to know? 👋</div>
+      </div>
+    </div>
+
+    <div class="chat-suggestions" id="chat-suggestions">
+      <button class="chat-suggestion-btn" onclick="chatSuggest(this)">What tech stack does he use?</button>
+      <button class="chat-suggestion-btn" onclick="chatSuggest(this)">Tell me about his AI projects</button>
+      <button class="chat-suggestion-btn" onclick="chatSuggest(this)">Is he open to work?</button>
+      <button class="chat-suggestion-btn" onclick="chatSuggest(this)">What makes him different?</button>
+    </div>
+
+    <div class="chat-input-row">
+      <input class="chat-input" id="chat-input" type="text" placeholder="Ask anything about Abhinav…" onkeydown="if(event.key==='Enter')sendChat()" autocomplete="off"/>
+      <button class="chat-send-btn" id="chat-send-btn" onclick="sendChat()">
+        <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      </button>
     </div>
   </div>
 
@@ -1129,89 +1378,254 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
     <div class="books-grid" id="books-grid">
 
       <!-- AI & Engineering -->
-      <div class="book-item" data-cat="ai">
-        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9781098107963-L.jpg" alt="Designing Machine Learning Systems" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">📘</div><div class="book-cover-placeholder-text">Designing Machine Learning Systems</div></div>
-        <div class="book-meta"><div class="book-title">Designing Machine Learning Systems</div><div class="book-author">Chip Huyen</div></div>
+      <div class="book-item" data-cat="ai" onclick="flipBook(this)">
+        <div class="book-flip-inner">
+          <div class="book-flip-front">
+            <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9781098107963-L.jpg" alt="Designing Machine Learning Systems" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+            <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">📘</div><div class="book-cover-placeholder-text">Designing Machine Learning Systems</div></div>
+          </div>
+          <div class="book-flip-back">
+            <div class="book-back-emoji">📘</div>
+            <div class="book-back-title">Designing ML Systems</div>
+            <div class="book-back-author">Chip Huyen</div>
+            <div class="book-back-summary">End-to-end guide to building reliable, scalable ML systems in production. Covers data pipelines, feature engineering, model serving &amp; monitoring.</div>
+            <div class="book-back-hint">tap to flip back</div>
+          </div>
+        </div>
+        <div class="book-meta"><div class="book-title">Designing ML Systems</div><div class="book-author">Chip Huyen</div></div>
       </div>
-      <div class="book-item" data-cat="ai">
-        <img class="book-cover" src="https://covers.openlibrary.org/b/olid/OL39480353M-L.jpg" alt="The Alignment Problem" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">🤖</div><div class="book-cover-placeholder-text">The Alignment Problem</div></div>
+      <div class="book-item" data-cat="ai" onclick="flipBook(this)">
+        <div class="book-flip-inner">
+          <div class="book-flip-front">
+            <img class="book-cover" src="https://covers.openlibrary.org/b/olid/OL39480353M-L.jpg" alt="The Alignment Problem" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+            <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">🤖</div><div class="book-cover-placeholder-text">The Alignment Problem</div></div>
+          </div>
+          <div class="book-flip-back">
+            <div class="book-back-emoji">🤖</div>
+            <div class="book-back-title">The Alignment Problem</div>
+            <div class="book-back-author">Brian Christian</div>
+            <div class="book-back-summary">Why AI systems fail to do what we actually want — and what researchers are doing to fix it. A gripping survey of ML safety research.</div>
+            <div class="book-back-hint">tap to flip back</div>
+          </div>
+        </div>
         <div class="book-meta"><div class="book-title">The Alignment Problem</div><div class="book-author">Brian Christian</div></div>
       </div>
-      <div class="book-item" data-cat="ai">
-        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780262035613-L.jpg" alt="Deep Learning" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">🧠</div><div class="book-cover-placeholder-text">Deep Learning</div></div>
+      <div class="book-item" data-cat="ai" onclick="flipBook(this)">
+        <div class="book-flip-inner">
+          <div class="book-flip-front">
+            <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780262035613-L.jpg" alt="Deep Learning" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+            <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">🧠</div><div class="book-cover-placeholder-text">Deep Learning</div></div>
+          </div>
+          <div class="book-flip-back">
+            <div class="book-back-emoji">🧠</div>
+            <div class="book-back-title">Deep Learning</div>
+            <div class="book-back-author">Goodfellow et al.</div>
+            <div class="book-back-summary">The definitive textbook on deep learning — covers the math, architectures &amp; techniques behind modern neural networks.</div>
+            <div class="book-back-hint">tap to flip back</div>
+          </div>
+        </div>
         <div class="book-meta"><div class="book-title">Deep Learning</div><div class="book-author">Goodfellow, Bengio &amp; Courville</div></div>
       </div>
-      <div class="book-item" data-cat="ai">
-        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780136042594-L.jpg" alt="AI: A Modern Approach" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">💡</div><div class="book-cover-placeholder-text">AI: A Modern Approach</div></div>
+      <div class="book-item" data-cat="ai" onclick="flipBook(this)">
+        <div class="book-flip-inner">
+          <div class="book-flip-front">
+            <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780136042594-L.jpg" alt="AI: A Modern Approach" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+            <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">💡</div><div class="book-cover-placeholder-text">AI: A Modern Approach</div></div>
+          </div>
+          <div class="book-flip-back">
+            <div class="book-back-emoji">💡</div>
+            <div class="book-back-title">AI: A Modern Approach</div>
+            <div class="book-back-author">Russell &amp; Norvig</div>
+            <div class="book-back-summary">The canonical AI textbook. Search, planning, logic, learning, perception — everything in one thorough reference.</div>
+            <div class="book-back-hint">tap to flip back</div>
+          </div>
+        </div>
         <div class="book-meta"><div class="book-title">AI: A Modern Approach</div><div class="book-author">Russell &amp; Norvig</div></div>
       </div>
 
       <!-- Software Systems -->
-      <div class="book-item" data-cat="sys" style="display:none">
-        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780132350884-L.jpg" alt="Clean Code" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">🧹</div><div class="book-cover-placeholder-text">Clean Code</div></div>
+      <div class="book-item" data-cat="sys" style="display:none" onclick="flipBook(this)">
+        <div class="book-flip-inner">
+          <div class="book-flip-front">
+            <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780132350884-L.jpg" alt="Clean Code" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+            <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">🧹</div><div class="book-cover-placeholder-text">Clean Code</div></div>
+          </div>
+          <div class="book-flip-back">
+            <div class="book-back-emoji">🧹</div>
+            <div class="book-back-title">Clean Code</div>
+            <div class="book-back-author">Robert C. Martin</div>
+            <div class="book-back-summary">Timeless principles for writing readable, maintainable code. Naming, functions, comments &amp; refactoring taught through real Java examples.</div>
+            <div class="book-back-hint">tap to flip back</div>
+          </div>
+        </div>
         <div class="book-meta"><div class="book-title">Clean Code</div><div class="book-author">Robert C. Martin</div></div>
       </div>
-      <div class="book-item" data-cat="sys" style="display:none">
-        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9781449373320-L.jpg" alt="Designing Data-Intensive Applications" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">🗄️</div><div class="book-cover-placeholder-text">Designing Data-Intensive Applications</div></div>
+      <div class="book-item" data-cat="sys" style="display:none" onclick="flipBook(this)">
+        <div class="book-flip-inner">
+          <div class="book-flip-front">
+            <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9781449373320-L.jpg" alt="Designing Data-Intensive Applications" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+            <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">🗄️</div><div class="book-cover-placeholder-text">Designing Data-Intensive Applications</div></div>
+          </div>
+          <div class="book-flip-back">
+            <div class="book-back-emoji">🗄️</div>
+            <div class="book-back-title">DDIA</div>
+            <div class="book-back-author">Martin Kleppmann</div>
+            <div class="book-back-summary">How databases, streams &amp; distributed systems really work. Essential for any engineer building at scale.</div>
+            <div class="book-back-hint">tap to flip back</div>
+          </div>
+        </div>
         <div class="book-meta"><div class="book-title">Designing Data-Intensive Applications</div><div class="book-author">Martin Kleppmann</div></div>
       </div>
-      <div class="book-item" data-cat="sys" style="display:none">
-        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780135957059-L.jpg" alt="The Pragmatic Programmer" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">⚙️</div><div class="book-cover-placeholder-text">The Pragmatic Programmer</div></div>
+      <div class="book-item" data-cat="sys" style="display:none" onclick="flipBook(this)">
+        <div class="book-flip-inner">
+          <div class="book-flip-front">
+            <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780135957059-L.jpg" alt="The Pragmatic Programmer" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+            <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">⚙️</div><div class="book-cover-placeholder-text">The Pragmatic Programmer</div></div>
+          </div>
+          <div class="book-flip-back">
+            <div class="book-back-emoji">⚙️</div>
+            <div class="book-back-title">The Pragmatic Programmer</div>
+            <div class="book-back-author">Hunt &amp; Thomas</div>
+            <div class="book-back-summary">Wisdom for career-long software craftsmanship — from DRY and orthogonality to debugging mindset &amp; professional ethics.</div>
+            <div class="book-back-hint">tap to flip back</div>
+          </div>
+        </div>
         <div class="book-meta"><div class="book-title">The Pragmatic Programmer</div><div class="book-author">Hunt &amp; Thomas</div></div>
       </div>
 
       <!-- Philosophy -->
-      <div class="book-item" data-cat="phil" style="display:none">
-        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9781541758001-L.jpg" alt="The Age of Surveillance Capitalism" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">👁️</div><div class="book-cover-placeholder-text">The Age of Surveillance Capitalism</div></div>
+      <div class="book-item" data-cat="phil" style="display:none" onclick="flipBook(this)">
+        <div class="book-flip-inner">
+          <div class="book-flip-front">
+            <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9781541758001-L.jpg" alt="The Age of Surveillance Capitalism" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+            <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">👁️</div><div class="book-cover-placeholder-text">The Age of Surveillance Capitalism</div></div>
+          </div>
+          <div class="book-flip-back">
+            <div class="book-back-emoji">👁️</div>
+            <div class="book-back-title">Surveillance Capitalism</div>
+            <div class="book-back-author">Shoshana Zuboff</div>
+            <div class="book-back-summary">How Big Tech harvests human experience as raw material to predict &amp; modify behaviour. A landmark critique of the digital economy.</div>
+            <div class="book-back-hint">tap to flip back</div>
+          </div>
+        </div>
         <div class="book-meta"><div class="book-title">The Age of Surveillance Capitalism</div><div class="book-author">Shoshana Zuboff</div></div>
       </div>
-      <div class="book-item" data-cat="phil" style="display:none">
-        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780374533557-L.jpg" alt="Thinking, Fast and Slow" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">🧩</div><div class="book-cover-placeholder-text">Thinking, Fast and Slow</div></div>
+      <div class="book-item" data-cat="phil" style="display:none" onclick="flipBook(this)">
+        <div class="book-flip-inner">
+          <div class="book-flip-front">
+            <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780374533557-L.jpg" alt="Thinking, Fast and Slow" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+            <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">🧩</div><div class="book-cover-placeholder-text">Thinking, Fast and Slow</div></div>
+          </div>
+          <div class="book-flip-back">
+            <div class="book-back-emoji">🧩</div>
+            <div class="book-back-title">Thinking, Fast and Slow</div>
+            <div class="book-back-author">Daniel Kahneman</div>
+            <div class="book-back-summary">System 1 vs System 2 — the two modes of thought that shape every decision. Nobel-winning insights into human irrationality.</div>
+            <div class="book-back-hint">tap to flip back</div>
+          </div>
+        </div>
         <div class="book-meta"><div class="book-title">Thinking, Fast and Slow</div><div class="book-author">Daniel Kahneman</div></div>
       </div>
 
       <!-- Business -->
-      <div class="book-item" data-cat="biz" style="display:none">
-        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9781501135910-L.jpg" alt="Shoe Dog" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">👟</div><div class="book-cover-placeholder-text">Shoe Dog</div></div>
+      <div class="book-item" data-cat="biz" style="display:none" onclick="flipBook(this)">
+        <div class="book-flip-inner">
+          <div class="book-flip-front">
+            <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9781501135910-L.jpg" alt="Shoe Dog" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+            <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">👟</div><div class="book-cover-placeholder-text">Shoe Dog</div></div>
+          </div>
+          <div class="book-flip-back">
+            <div class="book-back-emoji">👟</div>
+            <div class="book-back-title">Shoe Dog</div>
+            <div class="book-back-author">Phil Knight</div>
+            <div class="book-back-summary">Nike's origin story — grit, near-bankruptcies &amp; obsession. One of the most honest founder memoirs ever written.</div>
+            <div class="book-back-hint">tap to flip back</div>
+          </div>
+        </div>
         <div class="book-meta"><div class="book-title">Shoe Dog</div><div class="book-author">Phil Knight</div></div>
       </div>
-      <div class="book-item" data-cat="biz" style="display:none">
-        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780804139021-L.jpg" alt="Zero to One" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">🚀</div><div class="book-cover-placeholder-text">Zero to One</div></div>
+      <div class="book-item" data-cat="biz" style="display:none" onclick="flipBook(this)">
+        <div class="book-flip-inner">
+          <div class="book-flip-front">
+            <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780804139021-L.jpg" alt="Zero to One" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+            <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">🚀</div><div class="book-cover-placeholder-text">Zero to One</div></div>
+          </div>
+          <div class="book-flip-back">
+            <div class="book-back-emoji">🚀</div>
+            <div class="book-back-title">Zero to One</div>
+            <div class="book-back-author">Peter Thiel</div>
+            <div class="book-back-summary">Build monopolies, not competition. Thiel's contrarian framework for creating truly new things rather than copying what exists.</div>
+            <div class="book-back-hint">tap to flip back</div>
+          </div>
+        </div>
         <div class="book-meta"><div class="book-title">Zero to One</div><div class="book-author">Peter Thiel</div></div>
       </div>
 
       <!-- Fiction -->
-      <div class="book-item" data-cat="fiction" style="display:none">
-        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780008172145-L.jpg" alt="Eleanor Oliphant is Completely Fine" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">📖</div><div class="book-cover-placeholder-text">Eleanor Oliphant is Completely Fine</div></div>
+      <div class="book-item" data-cat="fiction" style="display:none" onclick="flipBook(this)">
+        <div class="book-flip-inner">
+          <div class="book-flip-front">
+            <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780008172145-L.jpg" alt="Eleanor Oliphant is Completely Fine" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+            <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">📖</div><div class="book-cover-placeholder-text">Eleanor Oliphant is Completely Fine</div></div>
+          </div>
+          <div class="book-flip-back">
+            <div class="book-back-emoji">📖</div>
+            <div class="book-back-title">Eleanor Oliphant</div>
+            <div class="book-back-author">Gail Honeyman</div>
+            <div class="book-back-summary">A lonely, singular woman navigates the world on her own rigid terms — until kindness unexpectedly cracks her open. Quietly devastating.</div>
+            <div class="book-back-hint">tap to flip back</div>
+          </div>
+        </div>
         <div class="book-meta"><div class="book-title">Eleanor Oliphant is Completely Fine</div><div class="book-author">Gail Honeyman</div></div>
       </div>
-      <div class="book-item" data-cat="fiction" style="display:none">
-        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9781250301697-L.jpg" alt="The Silent Patient" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">🔇</div><div class="book-cover-placeholder-text">The Silent Patient</div></div>
+      <div class="book-item" data-cat="fiction" style="display:none" onclick="flipBook(this)">
+        <div class="book-flip-inner">
+          <div class="book-flip-front">
+            <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9781250301697-L.jpg" alt="The Silent Patient" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+            <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">🔇</div><div class="book-cover-placeholder-text">The Silent Patient</div></div>
+          </div>
+          <div class="book-flip-back">
+            <div class="book-back-emoji">🔇</div>
+            <div class="book-back-title">The Silent Patient</div>
+            <div class="book-back-author">Alex Michaelides</div>
+            <div class="book-back-summary">A famous painter shoots her husband, then stops speaking forever. A therapist becomes obsessed with unravelling her silence. Gripping psychological thriller.</div>
+            <div class="book-back-hint">tap to flip back</div>
+          </div>
+        </div>
         <div class="book-meta"><div class="book-title">The Silent Patient</div><div class="book-author">Alex Michaelides</div></div>
       </div>
 
       <!-- History -->
-      <div class="book-item" data-cat="history" style="display:none">
-        <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780713999068-L.jpg" alt="KGB and the World" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">🕵️</div><div class="book-cover-placeholder-text">KGB and the World</div></div>
+      <div class="book-item" data-cat="history" style="display:none" onclick="flipBook(this)">
+        <div class="book-flip-inner">
+          <div class="book-flip-front">
+            <img class="book-cover" src="https://covers.openlibrary.org/b/isbn/9780713999068-L.jpg" alt="KGB and the World" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+            <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">🕵️</div><div class="book-cover-placeholder-text">KGB and the World</div></div>
+          </div>
+          <div class="book-flip-back">
+            <div class="book-back-emoji">🕵️</div>
+            <div class="book-back-title">KGB and the World</div>
+            <div class="book-back-author">Andrew &amp; Mitrokhin</div>
+            <div class="book-back-summary">Based on smuggled KGB archives — the definitive account of Soviet intelligence operations across the globe during the Cold War.</div>
+            <div class="book-back-hint">tap to flip back</div>
+          </div>
+        </div>
         <div class="book-meta"><div class="book-title">KGB and the World</div><div class="book-author">Christopher Andrew &amp; Vasili Mitrokhin</div></div>
       </div>
-      <div class="book-item" data-cat="history" style="display:none">
-        <img class="book-cover" src="https://covers.openlibrary.org/b/olid/OL169302M-L.jpg" alt="India After Independence" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">🇮🇳</div><div class="book-cover-placeholder-text">India After Independence</div></div>
+      <div class="book-item" data-cat="history" style="display:none" onclick="flipBook(this)">
+        <div class="book-flip-inner">
+          <div class="book-flip-front">
+            <img class="book-cover" src="https://covers.openlibrary.org/b/olid/OL169302M-L.jpg" alt="India After Independence" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+            <div class="book-cover-placeholder" style="display:none"><div class="book-cover-placeholder-icon">🇮🇳</div><div class="book-cover-placeholder-text">India After Independence</div></div>
+          </div>
+          <div class="book-flip-back">
+            <div class="book-back-emoji">🇮🇳</div>
+            <div class="book-back-title">India After Independence</div>
+            <div class="book-back-author">Bipan Chandra</div>
+            <div class="book-back-summary">A rigorous political &amp; economic history of India from 1947 onward — nation-building, Emergency, economic reforms &amp; social movements.</div>
+            <div class="book-back-hint">tap to flip back</div>
+          </div>
+        </div>
         <div class="book-meta"><div class="book-title">India After Independence</div><div class="book-author">Bipan Chandra</div></div>
       </div>
 
@@ -1390,6 +1804,51 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
     </div>
   </div>
 
+  <!-- SPOTIFY NOW PLAYING -->
+  <div class="card" id="sp-card" onclick="spOpenSpotify()">
+    <!-- Shimmer -->
+    <div id="sp-shimmer" class="sp-shimmer-wrap">
+      <div class="sp-shimmer-art"></div>
+      <div class="sp-shimmer-lines">
+        <div class="sp-shimmer-line sp-w70"></div>
+        <div class="sp-shimmer-line sp-w50"></div>
+        <div class="sp-shimmer-line sp-w85 sp-thin"></div>
+      </div>
+    </div>
+    <!-- Not playing -->
+    <div id="sp-not-playing" class="sp-not-wrap" style="display:none;">
+      <div class="sp-not-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
+      </div>
+      <div>
+        <span class="sp-not-label">Not Playing</span>
+        <span class="sp-not-sub">Spotify · Abhinav's queue</span>
+      </div>
+    </div>
+    <!-- Playing -->
+    <div id="sp-playing" style="display:none;">
+      <div class="sp-art-wrap">
+        <img id="sp-art" src="" alt="Album art" class="sp-art-img" />
+        <div class="sp-art-overlay"></div>
+        <div id="sp-bars" class="sp-bars"><span></span><span></span><span></span><span></span><span></span></div>
+      </div>
+      <div class="sp-info">
+        <div class="sp-top-row">
+          <svg class="sp-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.5 17.25c-.214.354-.672.466-1.025.252-2.81-1.716-6.348-2.104-10.516-1.152-.401.093-.803-.154-.896-.556-.093-.4.154-.802.556-.895 4.558-1.042 8.468-.592 11.633 1.326.353.215.465.673.248 1.025zm1.468-3.263c-.27.44-.845.578-1.285.307C14.6 12.278 10.657 11.45 5.945 12.77c-.49.136-.995-.15-1.131-.64-.136-.49.15-.995.64-1.131 5.302-1.476 9.66-.527 13.17 1.705.44.27.577.844.305 1.283zm.127-3.398c-3.62-2.149-9.595-2.347-13.053-1.298-.555.169-1.142-.143-1.31-.699-.168-.556.143-1.143.699-1.311 3.97-1.204 10.566-.972 14.733 1.501.5.297.664.942.367 1.443-.297.5-.942.663-1.436.364z"/></svg>
+          <div id="sp-badge" class="sp-badge sp-playing-badge"><span class="sp-badge-dot"></span> Now Playing</div>
+          <div id="sp-paused-badge" class="sp-badge sp-paused-badge" style="display:none;">Paused</div>
+        </div>
+        <div class="sp-track-title" id="sp-title">—</div>
+        <div class="sp-track-artist" id="sp-artist">—</div>
+        <div class="sp-track-album" id="sp-album">—</div>
+        <div class="sp-progress-wrap">
+          <div class="sp-progress-bar"><div id="sp-fill" class="sp-progress-fill" style="width:0%"></div></div>
+          <div class="sp-progress-times"><span id="sp-cur">0:00</span><span id="sp-dur">0:00</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- GITHUB ACTIVITY -->
   <div class="card" id="github">
     <div class="card-title" style="text-align:center;">My GitHub Activity.</div>
@@ -1428,6 +1887,9 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
   </a>
   <a class="nav-icon" href="#about" title="About">
     <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+  </a>
+  <a class="nav-icon" href="#ask" title="Ask Me">
+    <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V6h2v4z"/></svg>
   </a>
   <div class="nav-sep"></div>
   <!-- GitHub icon -->
@@ -1596,6 +2058,180 @@ function toggleWork(item, id) {
   document.querySelectorAll('.work-item').forEach(i => i.classList.remove('expanded'));
   if (!isOpen) { detail.classList.add('open'); item.classList.add('expanded'); }
 }
+function flipBook(item) {
+  item.classList.toggle('flipped');
+}
+
+/* ── CHATBOT ─────────────────────────────────────── */
+const ABHINAV_CONTEXT = `You are Abhinav Verma's personal AI assistant embedded on his portfolio website. You only answer questions about Abhinav. Be conversational, warm, and concise (2-4 sentences max). Use first-person perspective as if you are him ("I built...", "I work on..."). If asked something unrelated to Abhinav, politely redirect.
+
+About Abhinav Verma:
+- Software Engineer specialising in AI / Full-Stack, based in Bangalore, India
+- Originally from Lucknow, grew up in Kanpur, studied at RVCE Bangalore (EEE '24)
+- Currently building an AI-powered newsletter platform at Astilbe Page (React, Node.js, MongoDB; LLM routing with Mistral-7B, RBAC, email pipelines)
+- Previously at Tektronix: automated PCIe PLL bandwidth testing with Python + Selenium, replaced costly BERT hardware with software-driven solutions
+- Previously at Astilbe Page (Pune): compliance-focused agentic AI platform using RAG (OpenAI + Pinecone)
+- Tech stack: Python, JavaScript/TypeScript, React, Node.js, MongoDB, PostgreSQL, Redis, Docker, AWS, Mistral-7B, OpenAI API, Pinecone, LangChain, FastAPI
+- 400+ LeetCode problems solved
+- Does theatre: writes and performs street plays with CARV Hindi Theatre across Bangalore and national events
+- Mentors underprivileged students in mathematics
+- Open to interesting software/AI engineering roles
+- Strong in: LLM pipelines, RAG systems, agentic AI, API design, system design, full-stack development
+- Differentiators: combines deep AI/backend engineering with strong communication skills from theatre; cares about production reliability and observability
+- Travelled to: Bangalore, Pune, Lucknow, Kanpur, Austin TX (USA), Oita (Japan)`;
+
+async function sendChat() {
+  const input = document.getElementById('chat-input');
+  const msg = input.value.trim();
+  if (!msg) return;
+  input.value = '';
+  addBubble('user', msg);
+  document.getElementById('chat-suggestions').style.display = 'none';
+  showTyping();
+  document.getElementById('chat-send-btn').disabled = true;
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 300,
+        system: ABHINAV_CONTEXT,
+        messages: [{ role: 'user', content: msg }]
+      })
+    });
+    const data = await res.json();
+    removeTyping();
+    const reply = data.content?.[0]?.text || "Hmm, couldn't fetch a response right now. Try again!";
+    addBubble('bot', reply);
+  } catch (e) {
+    removeTyping();
+    addBubble('bot', "Sorry, something went wrong. Please try again.");
+  }
+  document.getElementById('chat-send-btn').disabled = false;
+}
+
+function chatSuggest(btn) {
+  document.getElementById('chat-input').value = btn.textContent;
+  sendChat();
+}
+
+// ── SPOTIFY NOW PLAYING ───────────────────────────────────────────────────────
+(function () {
+  /* ▶ CHANGE THIS to your deployed backend URL after deploy */
+  var BACKEND = 'https://spotift.onrender.com/now-playing';
+  var POLL_MS = 10000;
+
+  var FALLBACK = [
+    { isPlaying:true, title:'Blinding Lights', artist:'The Weeknd', album:'After Hours', duration:200040, progress:60000, coverImage:'https://i.scdn.co/image/ab67616d00001e028863bc11d2aa12b54f5aeb21', spotifyUrl:'https://open.spotify.com/track/0VjIjW4GlUZAMYd2vXMi3b' },
+    { isPlaying:true, title:'Starboy', artist:'The Weeknd, Daft Punk', album:'Starboy', duration:230453, progress:90000, coverImage:'https://i.scdn.co/image/ab67616d00001e02a048415db06a5b6e879f9f8d', spotifyUrl:'https://open.spotify.com/track/7MXVkk9YMctZqd1Srtv4MB' },
+    { isPlaying:true, title:'Levitating', artist:'Dua Lipa', album:'Future Nostalgia', duration:203064, progress:45000, coverImage:'https://i.scdn.co/image/ab67616d00001e02bd26ede1ae69327010d49946', spotifyUrl:'https://open.spotify.com/track/463CkQjx2Zk1yXoBuierM9' }
+  ];
+
+  var cur = null, progressMs = 0, playing = false, lastPoll = 0, usingFallback = false, raf = null;
+
+  var $shimmer    = document.getElementById('sp-shimmer');
+  var $notPlaying = document.getElementById('sp-not-playing');
+  var $playing    = document.getElementById('sp-playing');
+  var $art        = document.getElementById('sp-art');
+  var $title      = document.getElementById('sp-title');
+  var $artist     = document.getElementById('sp-artist');
+  var $album      = document.getElementById('sp-album');
+  var $fill       = document.getElementById('sp-fill');
+  var $cur        = document.getElementById('sp-cur');
+  var $dur        = document.getElementById('sp-dur');
+  var $badge      = document.getElementById('sp-badge');
+  var $pbadge     = document.getElementById('sp-paused-badge');
+  var $bars       = document.getElementById('sp-bars');
+
+  function fmt(ms) { var s=Math.floor(ms/1000); return Math.floor(s/60)+':'+(s%60<10?'0':'')+(s%60); }
+
+  function showShimmer()  { $shimmer.style.display=''; $notPlaying.style.display='none'; $playing.style.display='none'; }
+  function showNotPlay()  { $shimmer.style.display='none'; $notPlaying.style.display=''; $playing.style.display='none'; }
+
+  function applyTrack(t) {
+    $shimmer.style.display='none'; $notPlaying.style.display='none';
+    $playing.style.display='flex'; $playing.classList.remove('sp-fade');
+    $title.textContent=t.title; $artist.textContent=t.artist; $album.textContent=t.album;
+    $dur.textContent=fmt(t.duration);
+    if (t.coverImage && $art.src!==t.coverImage) $art.src=t.coverImage;
+    cur=t; progressMs=t.progress; playing=t.isPlaying; lastPoll=Date.now();
+    if (playing) {
+      $badge.style.display='flex'; $pbadge.style.display='none';
+      $bars.classList.remove('sp-paused'); $art.style.filter='';
+    } else {
+      $badge.style.display='none'; $pbadge.style.display='';
+      $bars.classList.add('sp-paused'); $art.style.filter='grayscale(60%) brightness(0.9)';
+    }
+  }
+
+  function renderTrack(t) {
+    var same = cur && cur.title===t.title;
+    if (!same && $playing.style.display!=='none') {
+      $playing.classList.add('sp-fade');
+      setTimeout(function(){ applyTrack(t); }, 380);
+    } else { applyTrack(t); }
+  }
+
+  function tick() {
+    if (playing && cur) {
+      var p = Math.min(progressMs + (Date.now()-lastPoll), cur.duration);
+      $fill.style.width = (p/cur.duration*100)+'%';
+      $cur.textContent = fmt(p);
+    }
+    raf = requestAnimationFrame(tick);
+  }
+
+  async function poll() {
+    try {
+      var r = await fetch(BACKEND, { cache:'no-store' });
+      if (!r.ok) throw new Error('HTTP '+r.status);
+      var d = await r.json();
+      usingFallback = false;
+      if (!d.isPlaying && !d.title) { showNotPlay(); cur=null; }
+      else renderTrack(d);
+    } catch(e) {
+      if (!usingFallback) {
+        usingFallback = true;
+        var fb = FALLBACK[Math.floor(Math.random()*FALLBACK.length)];
+        renderTrack(Object.assign({}, fb, { progress: Math.random()*fb.duration*0.8 }));
+      }
+    }
+  }
+
+  window.spOpenSpotify = function() {
+    window.open((cur&&cur.spotifyUrl)||'https://open.spotify.com','_blank','noopener');
+  };
+
+  showShimmer();
+  poll();
+  setInterval(poll, POLL_MS);
+  raf = requestAnimationFrame(tick);
+})();
+
+function addBubble(who, text) {
+  const msgs = document.getElementById('chat-messages');
+  const bubble = document.createElement('div');
+  bubble.className = 'chat-bubble ' + who;
+  bubble.innerHTML = '<div class="chat-bubble-avatar">' + (who === 'bot' ? '🤖' : '👤') + '</div><div class="chat-bubble-text">' + text + '</div>';
+  msgs.appendChild(bubble);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showTyping() {
+  const msgs = document.getElementById('chat-messages');
+  const el = document.createElement('div');
+  el.className = 'chat-bubble bot'; el.id = 'chat-typing-bubble';
+  el.innerHTML = '<div class="chat-bubble-avatar">🤖</div><div class="chat-typing"><span></span><span></span><span></span></div>';
+  msgs.appendChild(el);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function removeTyping() {
+  const el = document.getElementById('chat-typing-bubble');
+  if (el) el.remove();
+}
+
 function selectBookCat(btn, cat) {
   btn.classList.toggle('active');
   const allBtns = Array.from(document.querySelectorAll('.book-cat-btn'));
