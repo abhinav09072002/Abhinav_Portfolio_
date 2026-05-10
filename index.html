@@ -1982,6 +1982,105 @@ window.addEventListener('load', () => {
 });
 </script>
 <script>
+(function() {
+  var BACKEND = 'https://spotift.onrender.com/now-playing';
+  var POLL_MS = 10000;
+  var FALLBACK = [
+    { title: 'Blinding Lights', artist: 'The Weeknd', album: 'After Hours', duration: 200040, progress: 60000, isPlaying: false, coverImage: '', spotifyUrl: 'https://open.spotify.com' },
+    { title: 'Levitating', artist: 'Dua Lipa', album: 'Future Nostalgia', duration: 203000, progress: 80000, isPlaying: false, coverImage: '', spotifyUrl: 'https://open.spotify.com' },
+  ];
+  var $shimmer = document.getElementById('sp-shimmer');
+  var $notPlaying = document.getElementById('sp-not-playing');
+  var $playing = document.getElementById('sp-playing');
+  var $title = document.getElementById('sp-title');
+  var $artist = document.getElementById('sp-artist');
+  var $album = document.getElementById('sp-album');
+  var $art = document.getElementById('sp-art');
+  var $badge = document.getElementById('sp-badge');
+  var $pbadge = document.getElementById('sp-paused-badge');
+  var $bars = document.querySelector('.sp-bars');
+  var $fill = document.getElementById('sp-fill');
+  var $cur = document.getElementById('sp-cur');
+  var $dur = document.getElementById('sp-dur');
+  var cur = null, playing = false, progressMs = 0, lastPoll = 0, raf, usingFallback = false;
+
+  function fmt(ms) {
+    var s = Math.floor(ms / 1000);
+    return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2);
+  }
+  function showShimmer() {
+    $shimmer.style.display = 'flex';
+    $notPlaying.style.display = 'none';
+    $playing.style.display = 'none';
+  }
+  function showNotPlay() {
+    $shimmer.style.display = 'none';
+    $notPlaying.style.display = 'flex';
+    $playing.style.display = 'none';
+  }
+  function applyTrack(t) {
+    $shimmer.style.display = 'none';
+    $notPlaying.style.display = 'none';
+    $playing.style.display = 'flex';
+    $playing.classList.remove('sp-fade');
+    $title.textContent = t.title;
+    $artist.textContent = t.artist;
+    $album.textContent = t.album;
+    $dur.textContent = fmt(t.duration);
+    if (t.coverImage && $art.getAttribute('data-src') !== t.coverImage) {
+      $art.setAttribute('data-src', t.coverImage);
+      $art.src = t.coverImage;
+    }
+    cur = t; progressMs = t.progress; playing = t.isPlaying; lastPoll = Date.now();
+    if (playing) {
+      $badge.style.display = 'flex'; $pbadge.style.display = 'none';
+      $bars.classList.remove('sp-paused'); $art.style.filter = '';
+    } else {
+      $badge.style.display = 'none'; $pbadge.style.display = '';
+      $bars.classList.add('sp-paused'); $art.style.filter = 'grayscale(60%) brightness(0.9)';
+    }
+  }
+  function renderTrack(t) {
+    var same = cur && cur.title === t.title;
+    if (!same && $playing.style.display !== 'none') {
+      $playing.classList.add('sp-fade');
+      setTimeout(function() { applyTrack(t); }, 380);
+    } else { applyTrack(t); }
+  }
+  function tick() {
+    if (playing && cur) {
+      var p = Math.min(progressMs + (Date.now() - lastPoll), cur.duration);
+      $fill.style.width = (p / cur.duration * 100) + '%';
+      $cur.textContent = fmt(p);
+    }
+    raf = requestAnimationFrame(tick);
+  }
+  async function poll() {
+    try {
+      var r = await fetch(BACKEND, { cache: 'no-store' });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      var d = await r.json();
+      usingFallback = false;
+      if (!d.isPlaying) { showNotPlay(); cur = null; }
+      else renderTrack(d);
+    } catch(e) {
+      if (!usingFallback) {
+        usingFallback = true;
+        var fb = FALLBACK[Math.floor(Math.random() * FALLBACK.length)];
+        renderTrack(Object.assign({}, fb, { progress: Math.random() * fb.duration * 0.8 }));
+      }
+    }
+  }
+  window.spOpenSpotify = function() {
+    window.open((cur && cur.spotifyUrl) || 'https://open.spotify.com', '_blank', 'noopener');
+  };
+  showShimmer();
+  poll();
+  setInterval(poll, POLL_MS);
+  raf = requestAnimationFrame(tick);
+})();
+</script>
+<script>
 let fishTimeout;
 let spawnInterval;
 
