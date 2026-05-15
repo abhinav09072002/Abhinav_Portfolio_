@@ -626,6 +626,31 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
     opacity: 0;
   }
 }
+/* Fish eye pupil stays dark in both themes */
+#fish-btn svg circle[fill="#1a1814"] { fill: #0f0e0c; }
+[data-theme="dark"] #fish-btn svg circle[fill="#1a1814"] { fill: #0f0e0c; }
+
+/* Fish button active (ON) state — visible in both light and dark */
+.nav-icon.fish-active {
+  color: var(--accent) !important;
+  background: var(--tag-bg) !important;
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 0 3px rgba(42,125,111,0.22), 0 0 10px rgba(42,125,111,0.25);
+  transform: translateY(-2px) scale(1.08);
+  animation: fishBtnPulse 1.4s ease-in-out infinite;
+}
+[data-theme="dark"] .nav-icon.fish-active {
+  box-shadow: 0 0 0 3px rgba(77,184,166,0.28), 0 0 14px rgba(77,184,166,0.35);
+}
+@keyframes fishBtnPulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(42,125,111,0.22), 0 0 10px rgba(42,125,111,0.25); }
+  50%       { box-shadow: 0 0 0 5px rgba(42,125,111,0.38), 0 0 18px rgba(42,125,111,0.40); }
+}
+[data-theme="dark"] @keyframes fishBtnPulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(77,184,166,0.28), 0 0 14px rgba(77,184,166,0.35); }
+  50%       { box-shadow: 0 0 0 5px rgba(77,184,166,0.44), 0 0 22px rgba(77,184,166,0.5); }
+}
+
 .nav-icon svg { fill: currentColor; }
 
 @keyframes swim {
@@ -1790,10 +1815,26 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
     <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
   </button>
   <div class="nav-sep"></div>
-  <!-- Fish icon -->
-   <a class="nav-icon" onclick="toggleFish()" title="Fish Mode">
-  <svg viewBox="0 0 24 24"><path d="M2 12s4-6 10-6c4 0 8 3 10 6-2 3-6 6-10 6-6 0-10-6-10-6zm10 0a2 2 0 100 4 2 2 0 000-4z"/>
-  </svg>
+  <!-- Fish icon — click to toggle ON/OFF -->
+  <a id="fish-btn" class="nav-icon" onclick="toggleFishMode()" title="Click for Fish Mode 🐟" style="cursor:pointer;">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- bubble top-right -->
+      <circle cx="19.5" cy="3.5" r="1.5" fill="currentColor" opacity="0.5"/>
+      <!-- bubble mid-right (smaller) -->
+      <circle cx="17" cy="7" r="1" fill="currentColor" opacity="0.35"/>
+      <!-- fish body -->
+      <ellipse cx="10" cy="15" rx="6" ry="3.8" fill="currentColor"/>
+      <!-- tail fin -->
+      <path d="M4 15 L0.5 11.5 L0.5 18.5 Z" fill="currentColor"/>
+      <!-- pectoral fin -->
+      <path d="M9 14 Q11 11.5 13.5 13" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.6"/>
+      <!-- eye -->
+      <circle cx="14.5" cy="14.2" r="1.2" fill="white"/>
+      <circle cx="14.8" cy="14.2" r="0.6" fill="#1a1814"/>
+      <circle cx="15.1" cy="13.9" r="0.25" fill="white"/>
+      <!-- mouth -->
+      <path d="M16 15.5 Q16.8 16.2 16 16.8" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round" opacity="0.7"/>
+    </svg>
   </a>
   <div class="nav-sep"></div>
   <!-- Resume Download -->
@@ -2081,38 +2122,56 @@ window.addEventListener('load', () => {
 })();
 </script>
 <script>
-let fishTimeout;
 let spawnInterval;
+let fishModeOn = false;
 
-function toggleFish() {
+function toggleFishMode() {
+  const btn = document.getElementById("fish-btn");
   const container = document.getElementById("fish-container");
 
-  clearTimeout(fishTimeout);
-  clearInterval(spawnInterval);
-  container.innerHTML = "";
-
-  // 💥 smooth staggered burst (FIXED)
-  for (let i = 0; i < 50; i++) {
-    setTimeout(() => createFish(container), i * 80);
-  }
-
-  // 🫧 bubbles
-  for (let i = 0; i < 25; i++) {
-    setTimeout(() => createBubble(container), i * 120);
-  }
-
-  // 🌊 continuous waves (slower + smoother)
-  spawnInterval = setInterval(() => {
-    for (let i = 0; i < 10; i++) {
-      setTimeout(() => createFish(container), i * 60);
-    }
-  }, 600); // slower interval
-
-  // ⏱ stop after 12 sec
-  fishTimeout = setTimeout(() => {
+  if (fishModeOn) {
+    // Turn OFF — instant
+    fishModeOn = false;
     clearInterval(spawnInterval);
     container.innerHTML = "";
-  }, 12000);
+    btn.classList.remove("fish-active");
+    btn.title = "Click for Fish Mode 🐟";
+  } else {
+    // Turn ON — instant
+    fishModeOn = true;
+    btn.classList.add("fish-active");
+    btn.title = "Click to stop Fish Mode 🐟";
+    startFishAnimation();
+  }
+}
+
+function startFishAnimation() {
+  const container = document.getElementById("fish-container");
+  container.innerHTML = "";
+  clearInterval(spawnInterval);
+
+  // Immediate first wave — no stagger delay, all at once
+  for (let i = 0; i < 12; i++) createFish(container);
+  for (let i = 0; i < 6; i++) createBubble(container);
+
+  // Short-stagger secondary burst (feels like a splash)
+  for (let i = 1; i <= 20; i++) {
+    setTimeout(() => { if (fishModeOn) createFish(container); }, i * 30);
+  }
+  for (let i = 1; i <= 10; i++) {
+    setTimeout(() => { if (fishModeOn) createBubble(container); }, i * 50);
+  }
+
+  // Continuous waves — steady stream
+  spawnInterval = setInterval(() => {
+    if (!fishModeOn) { clearInterval(spawnInterval); return; }
+    for (let i = 0; i < 6; i++) {
+      setTimeout(() => { if (fishModeOn) createFish(container); }, i * 40);
+    }
+    for (let i = 0; i < 3; i++) {
+      setTimeout(() => { if (fishModeOn) createBubble(container); }, i * 80);
+    }
+  }, 500);
 }
 
 function createFish(container) {
